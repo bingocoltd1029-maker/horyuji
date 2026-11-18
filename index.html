@@ -48,7 +48,7 @@ if(ev)gtag('event',ev,{link_text:(a.textContent||'').trim().slice(0,40),ab_fv:wi
 section:not(.hx-hero) h2{font-family:'Noto Serif JP',serif !important;font-weight:700 !important;letter-spacing:.04em;position:relative;padding-bottom:16px}
 section:not(.hx-hero) h2::after{content:"";display:block;width:56px;height:2px;background:linear-gradient(90deg,transparent,var(--ds-gold),transparent);margin:14px auto 0}
 section:not(.hx-hero) [style*="text-align: center"] h2::after,section:not(.hx-hero) h2[style*="center"]::after{margin-left:auto;margin-right:auto}
-section:not(.hx-hero) div:not([style*="text-align: center"])>h2::after{margin-left:0}
+section:not(.hx-hero) div:not([style*="text-align: center"])>h2::after{margin-left:0;background:linear-gradient(90deg,var(--ds-gold),transparent)}
 section p[style*="letter-spacing: 0.16em"]{color:var(--ds-gold) !important;display:inline-flex;align-items:center;gap:10px;justify-content:center;align-self:center}
 section p[style*="letter-spacing: 0.16em"]::before,section p[style*="letter-spacing: 0.16em"]::after{content:"";width:24px;height:1px;background:var(--ds-gold)}
 section[style*="#F5F6FA"],section[style*="#EEF0F7"]{background-color:var(--ds-ivory) !important}
@@ -224,8 +224,29 @@ section[style*="#161B45"],section[style*="#232C7A"],section[style*="#12163F"]{ba
 <div style="max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; align-items: center; text-align: center">
 <p style="margin: 0; font-size: 13px; color: #232C7A; font-weight: 700; letter-spacing: 0.16em">WEB LIMITED COUPON</p>
 <h2 style="margin: 0; font-family: 'Noto Sans JP', sans-serif; font-size: 32px; line-height: 1.5">WEB限定クーポン</h2>
-<div style="width: 100%; box-sizing: border-box; background: #FFFFFF; border: 2px dashed #232C7A; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 14px; align-items: center">
-<img src="img/coupon.webp" alt="11月30日まで WEB限定クーポン。時計・アクセサリー買取金額30%UP。この画像をスタッフにお見せください。買取大吉 法隆寺店 TEL 06-7777-6590" width="1080" height="1080" style="width: 100%; height: auto; border-radius: 8px; display: block">
+<div style="width: 100%; box-sizing: border-box; background: #FFFFFF; border-radius: 12px; padding: 4px 0 0; display: flex; flex-direction: column; gap: 14px; align-items: center">
+<div class="tk" role="img" aria-label="WEB限定クーポン。2026年11月30日まで。時計・アクセサリー買取金額30%UP、上記以外の品物10%UP。買取大吉 法隆寺店のみ。">
+<div class="tk-l"><p class="tk-lb">WEB LIMITED COUPON</p><p class="tk-tt">時計・アクセサリー</p><p class="tk-rt">買取金額 <b>30</b><span>%</span>UP</p><p class="tk-sb">上記以外の品物も <b>10%UP</b></p></div>
+<div class="tk-r"><p>有効期限</p><p class="tk-dt">11/30<small>（月）まで</small></p><p class="tk-st">買取大吉<br>法隆寺店</p></div>
+</div>
+<style>
+.tk{position:relative;width:100%;display:grid;grid-template-columns:1fr 150px;background:var(--ds-ivory,#F7F4ED);border:2px solid #C9A54C;border-radius:14px;overflow:hidden;text-align:left;box-shadow:0 12px 32px rgba(35,44,122,.12)}
+.tk p{margin:0}
+.tk-l{padding:22px 24px;border-right:2px dashed #C9A54C;position:relative}
+.tk-l::before,.tk-l::after{content:"";position:absolute;right:-12px;width:22px;height:22px;border-radius:50%;background:#fff;border:2px solid #C9A54C}
+.tk-l::before{top:-13px}.tk-l::after{bottom:-13px}
+.tk-lb{font-size:12px;font-weight:800;letter-spacing:.16em;color:#9C7A23}
+.tk-tt{font-size:19px;font-weight:800;color:#232C7A;margin-top:6px !important}
+.tk-rt{font-family:'Noto Serif JP',serif;font-size:22px;font-weight:700;color:#1A1A1A;line-height:1.2}
+.tk-rt b{font-size:72px;color:#C8102E;letter-spacing:-.03em}.tk-rt span{font-size:30px;color:#C8102E}
+.tk-sb{font-size:15px;font-weight:700;color:#5F532F;margin-top:4px !important}.tk-sb b{color:#232C7A}
+.tk-r{background:#232C7A;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:16px 10px;text-align:center}
+.tk-r p:first-child{font-size:12px;color:#E7C978;letter-spacing:.1em}
+.tk-dt{font-family:'Noto Serif JP',serif;font-size:30px;font-weight:700;line-height:1.1}.tk-dt small{display:block;font-size:13px;font-family:'Noto Sans JP',sans-serif;font-weight:500}
+.tk-st{margin-top:8px !important;font-size:13px;font-weight:700;color:#E7C978;line-height:1.5}
+@media (max-width:520px){.tk{grid-template-columns:1fr 104px}.tk-l{padding:18px 14px}.tk-rt b{font-size:56px}.tk-tt{font-size:17px}.tk-dt{font-size:24px}}
+</style>
+<details style="width:100%;text-align:center"><summary style="cursor:pointer;font-weight:700;color:#232C7A;padding:8px;min-height:44px">クーポン画像で表示する</summary><img src="img/coupon.webp" alt="11月30日まで WEB限定クーポン。時計・アクセサリー買取金額30%UP。この画像をスタッフにお見せください。買取大吉 法隆寺店 TEL 06-7777-6590" width="1080" height="1080" style="width: 100%; height: auto; border-radius: 8px; display: block"></details>
 <p style="margin: 0; font-size: 16px; font-weight: 700; color: #1A1A1A">使い方：ご来店時に、この画面をスタッフにお見せください</p>
 <span style="font-size: 15px; color: #3D4150; line-height: 1.8; text-align: left">対象：時計・アクセサリー → 買取金額30%UP<br>上記以外の品物 → 買取金額10%UP<br>対象店舗：買取大吉 法隆寺店のみ</span>
 <div style="width: 100%; box-sizing: border-box; background: #FFF8E6; border: 2px solid #C9A54C; border-radius: 12px; padding: 16px; text-align: left">
