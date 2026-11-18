@@ -82,6 +82,44 @@ items=''.join(f'''<a href="/blog/{q['slug']}/" class="card" style="display:flex;
 <div style="flex:999 1 280px;padding:16px 20px"><p class="meta" style="margin:0">{q['date'].replace('-','.')}　{q['cat']}</p><p style="margin:4px 0 0;font-weight:700;font-size:18px;line-height:1.6">{q['title']}</p></div></a>''' for q in allp)
 lb=f'<h1>店長ブログ</h1><p class="meta" style="margin-bottom:24px">斑鳩町・法隆寺の買取大吉 法隆寺店から、お買取り実績やお役立ち情報をお届けします。</p>{items}'
 open(f'{ROOT}/blog/index.html','w',encoding='utf-8').write(page('店長ブログ｜買取大吉 法隆寺店（斑鳩町）','買取大吉 法隆寺店（奈良県斑鳩町）の店長ブログ。金・ブランド品・時計の買取のコツやお知らせを更新しています。',f'{SITE}/blog/',lb,ogtype='website'))
-urls=[('/',today),('/blog/',today)]+[(f"/blog/{q['slug']}/",q['date']) for q in allp]
+
+# ===== 買取参考価格ページ（_tools/price_raw.tsv：カテゴリ / 品名 / 価格 / 本部画像パス）=====
+from urllib.parse import quote
+PRICE_DATE='2026年11月18日'
+CDN='https://cdn.speedsize.com/238b2c9c-0e0b-44a9-9a48-93e2951b75dc/www.kaitori-daikichi.jp/cms/wp-content/uploads/'
+rows=[l.rstrip('\n').split('\t') for l in open(os.path.join(os.path.dirname(__file__),'price_raw.tsv'),encoding='utf-8') if l.strip()]
+CATS=['金・貴金属','ジュエリー','時計','バッグ','財布・小物','お酒','切手','古銭・記念硬貨','服','カメラ']
+rows.sort(key=lambda r:CATS.index(r[0]) if r[0] in CATS else 99)
+cards=''.join(f'<div class="pc" data-cat="{c}"><img src="{CDN}{quote(i)}" alt="{n}" width="335" height="230" loading="lazy" referrerpolicy="no-referrer"><div class="pb"><span class="tag">{c}</span><span class="nm">{n}</span><span class="lb">買取参考価格</span><span class="pr">{p}<small>円</small></span></div></div>' for c,n,p,i in rows)
+present=[c for c in CATS if any(r[0]==c for r in rows)]
+btns='<button class="fb on" data-f="all">すべて（'+str(len(rows))+'）</button>'+''.join(f'<button class="fb" data-f="{c}">{c}（{sum(1 for r in rows if r[0]==c)}）</button>' for c in present)
+pb=f"""<style>
+.wrap{{max-width:1120px!important}}
+.fbs{{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}}
+.fb{{font:inherit;font-size:15px;font-weight:700;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid #232C7A;background:#fff;color:#232C7A;cursor:pointer}}
+.fb.on{{background:#232C7A;color:#fff}}
+.pg{{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}}
+.pc{{background:#fff;border:1px solid #DDE0EA;border-radius:10px;overflow:hidden;display:flex;flex-direction:column}}
+.pc img{{width:100%;aspect-ratio:335/230;object-fit:contain;background:#fff;display:block;border-bottom:1px solid #EEF0F7}}
+.pb{{padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px;flex:1}}
+.tag{{align-self:flex-start;background:#EEF0F7;color:#232C7A;font-size:12px;font-weight:700;padding:1px 9px;border-radius:999px}}
+.nm{{font-size:15px;font-weight:700;line-height:1.5;flex:1}}
+.lb{{font-size:12px;color:#5E6272}}
+.pr{{font-size:24px;font-weight:700;color:#C8102E;line-height:1.2}} .pr small{{font-size:14px;margin-left:2px}}
+</style>
+<h1>買取参考価格</h1>
+<p class="meta" style="margin:0 0 6px">全国の買取大吉でのお買取り例 {len(rows)}点（{PRICE_DATE}時点）</p>
+<p style="margin:0 0 20px;font-size:16px">金・ジュエリー・時計・バッグなど、買取大吉の公式サイトに載っている買取参考価格です。同じお品物でも、状態や付属品、その日の相場で金額は変わります。<strong>「うちのはいくら？」は、法隆寺店で無料査定</strong>してください。</p>
+<div class="fbs" role="group" aria-label="カテゴリで絞り込む">{btns}</div>
+<div class="pg" id="pg">{cards}</div>
+<p class="meta" style="margin-top:20px">※出典：買取大吉 公式サイト掲載の買取参考価格・写真（{PRICE_DATE}時点）。買取金額を保証するものではありません。<br>※お品物の状態・付属品の有無・その日の相場によって金額は変わります。金・プラチナは毎日の相場で価格が変わります。</p>
+<script>
+document.querySelectorAll('.fb').forEach(b=>b.addEventListener('click',()=>{{document.querySelectorAll('.fb').forEach(x=>x.classList.toggle('on',x===b));const f=b.dataset.f;document.querySelectorAll('.pc').forEach(c=>c.style.display=(f==='all'||c.dataset.cat===f)?'':'none');}}));
+</script>
+{{STORECARD}}"""
+pb=pb.replace('{STORECARD}',STORECARD)
+os.makedirs(f'{ROOT}/price',exist_ok=True)
+open(f'{ROOT}/price/index.html','w',encoding='utf-8').write(page('買取参考価格 100点｜買取大吉 法隆寺店（斑鳩町）','金・ジュエリー・時計・バッグ・切手など、買取大吉の買取参考価格を写真付きで紹介。斑鳩町・法隆寺の買取大吉 法隆寺店では査定無料・予約不要です。',f'{SITE}/price/',pb,ogtype='website'))
+urls=[('/',today),('/price/',today),('/blog/',today)]+[(f"/blog/{q['slug']}/",q['date']) for q in allp]
 open(f'{ROOT}/sitemap.xml','w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join(f'<url><loc>{SITE}{u}</loc><lastmod>{d}</lastmod></url>\n' for u,d in urls)+'</urlset>\n')
 print('built',len(POSTS),'posts')
