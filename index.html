@@ -25,7 +25,7 @@
 body{margin:0;background:#F5F6FA}
 a{color:#232C7A}a:hover{color:#161C55}
 </style>
-<style>html{scroll-behavior:smooth} @media (max-width:820px){body{padding-bottom:72px}} @media (min-width:821px){.sticky-cta{display:none !important}} img{max-width:100%} @media (max-width:600px){h1{font-size:32px !important} h2{font-size:24px !important}}</style>
+<style>html{scroll-behavior:smooth} @media (max-width:820px){body{padding-bottom:72px}} @media (min-width:821px){.sticky-cta{display:none !important}} img{max-width:100%} @media (max-width:600px){h1{font-size:32px !important} h2{font-size:24px !important}} @media (max-width:820px){header nav{display:none !important} header img{height:42px !important} header > div{padding:10px 16px !important} header a[href^="tel:"]{padding:8px 12px !important;font-size:15px}} #coupon{scroll-margin-top:8px}</style>
 <script>
 /* GA4：測定ID（G-から始まる）をGA_IDに入れると計測が始まります */
 var GA_ID='';
@@ -63,26 +63,102 @@ if(ev)gtag('event',ev,{link_text:(a.textContent||'').trim().slice(0,40)});});}
 </div>
 </header>
 
-<!-- ヒーロー -->
-<section style="background: #161B45; color: #FFFFFF">
-<div style="max-width: 1120px; margin: 0 auto; padding: 64px 24px 56px; display: flex; flex-wrap: wrap; gap: 40px; align-items: center">
-<div style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
-<a href="#coupon" style="align-self: flex-start; background: #C8102E; color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 15px; padding: 8px 18px; border-radius: 6px">11月30日まで｜時計・アクセサリー 買取金額30%UP →</a>
-<p style="margin: 0; font-size: 14px; color: #C9A54C; font-weight: 700; letter-spacing: 0.08em">テレビCMでおなじみ・全国2,500店舗以上</p>
-<h1 style="margin: 0; font-weight: 700; font-size: 40px; line-height: 1.4; color: #FFFFFF"><span style="display: block; font-size: 18px; color: #FFFFFF; margin-bottom: 6px">斑鳩町で金・貴金属・ブランド品の買取なら</span><span style="color: #C9A54C">買取大吉</span> 法隆寺店</h1>
-<p style="margin: 0; font-size: 22px; font-weight: 700; line-height: 1.6">眠っている金、いくらになるか<br>知っていますか？</p>
-<p style="margin: 0; font-size: 16px; color: #E3E6F5">切れたネックレス1本から無料で査定します。ご相談だけでも大丈夫です。</p>
-<div style="display: flex; flex-wrap: wrap; gap: 8px"><span style="background: rgba(255,255,255,0.12); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.35); border-radius: 999px; padding: 4px 14px; font-size: 14px; font-weight: 700">査定無料・相談だけOK</span><span style="background: rgba(255,255,255,0.12); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.35); border-radius: 999px; padding: 4px 14px; font-size: 14px; font-weight: 700">予約不要</span><span style="background: rgba(255,255,255,0.12); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.35); border-radius: 999px; padding: 4px 14px; font-size: 13px; font-weight: 700">無料駐車場あり</span><span style="background: rgba(255,255,255,0.12); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.35); border-radius: 999px; padding: 4px 14px; font-size: 13px; font-weight: 700">半個室で査定</span><span style="background: rgba(255,255,255,0.12); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.35); border-radius: 999px; padding: 4px 14px; font-size: 13px; font-weight: 700">年中無休 10〜19時</span></div>
-<div style="display: flex; flex-wrap: wrap; gap: 12px"><a href="tel:0677776590" style="flex: 1 1 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #C9A54C; color: #1A1A1A; text-decoration: none; font-weight: 700; font-size: 18px; padding: 14px 20px; border-radius: 10px; min-height: 56px; box-sizing: border-box; line-height: 1.4">無料で電話相談する<span style="font-size: 13px; font-weight: 500">10〜19時・年中無休</span></a><a href="https://line.me/ti/p/CZCmVd4SQf" style="flex: 1 1 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #06C755; color: #0B2A16; text-decoration: none; font-weight: 700; font-size: 18px; padding: 14px 20px; border-radius: 10px; min-height: 56px; box-sizing: border-box; line-height: 1.4">LINEで写真を送って査定<span style="font-size: 13px; font-weight: 500">撮って送るだけ・無料</span></a></div>
-<span style="font-size: 14px; color: #C9CEF2">※ご来店の予約は不要です。査定・ご相談は無料で、売らなくても大丈夫です。</span>
+<!-- ヒーロー（ファーストビュー） -->
+<style>
+.hv{background:radial-gradient(ellipse at 85% 20%,rgba(201,165,76,.22),transparent 55%),linear-gradient(160deg,#0E1338 0%,#1A2160 55%,#232C7A 100%);color:#fff;overflow:hidden}
+.hv-in{max-width:1120px;margin:0 auto;padding:48px 24px 56px;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);grid-template-areas:"head vis" "cp vis" "cta photos";column-gap:48px;row-gap:22px;align-items:start}
+.a-head{grid-area:head;display:flex;flex-direction:column;gap:14px}
+.a-cp{grid-area:cp}.a-cta{grid-area:cta;display:flex;flex-direction:column;gap:10px}
+.a-vis{grid-area:vis;align-self:center}.a-photos{grid-area:photos}
+.hv-lb{margin:0;font-size:14px;color:#E2C77E;font-weight:700;letter-spacing:.06em}
+.hv h1{margin:0;font-weight:700;font-size:42px;line-height:1.35;color:#fff}
+.hv h1 .s{display:block;font-size:18px;margin-bottom:6px;font-weight:500;color:#E3E6F5}
+.hv h1 .g{font-family:'Noto Serif JP',serif;color:#E2C77E}
+.hv-cc{margin:0;font-family:'Noto Serif JP',serif;font-size:24px;font-weight:700;line-height:1.6}
+.hv-sub{margin:0;font-size:16px;color:#E3E6F5}
+.hv-bd{display:flex;gap:12px;flex-wrap:wrap;margin:4px 0 0;padding:0;list-style:none}
+.hv-bd li{width:88px;height:88px;border-radius:50%;border:2px solid #C9A54C;background:rgba(14,19,56,.55);display:flex;align-items:center;justify-content:center;text-align:center;font-size:16px;font-weight:700;line-height:1.35}
+.hv-bd li.w{width:auto;height:auto;border-radius:999px;padding:6px 16px;font-size:14px;border-width:1px;border-color:rgba(255,255,255,.45)}
+.cp{display:block;text-decoration:none;color:#1A1A1A;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.28);border:2px solid #C9A54C}
+.cp-top{background:#C8102E;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 16px;font-weight:700;font-size:15px;flex-wrap:wrap}
+.cp-top .cd{background:#fff;color:#C8102E;border-radius:999px;padding:1px 10px;font-size:14px}
+.cp-bd{padding:14px 18px 16px;display:flex;flex-direction:column;gap:6px}
+.cp-t{margin:0;font-size:17px;font-weight:700;color:#232C7A}
+.cp-big{margin:0;font-size:20px;font-weight:700;line-height:1.3}
+.cp-big b{font-family:'Noto Serif JP',serif;font-size:46px;color:#C8102E;letter-spacing:-.01em}
+.cp-s{margin:0;font-size:15px;color:#3D4150}
+.cp-btn{margin-top:6px;display:flex;align-items:center;justify-content:center;gap:6px;min-height:52px;border-radius:10px;background:#C8102E;color:#fff;font-weight:700;font-size:18px}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+.btns a{flex:1 1 220px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;font-weight:700;font-size:17px;padding:10px 16px;border-radius:10px;min-height:56px;box-sizing:border-box;line-height:1.4}
+.btns a span{font-size:13px;font-weight:500}
+.hv-nt{font-size:14px;color:#C9CEF2}
+.pv{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pv figure{margin:0;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;aspect-ratio:1/1}
+.pv img{width:100%;height:100%;object-fit:contain;display:block}
+.pv figure.t{grid-row:span 2;aspect-ratio:auto}
+.pv-cap{margin:10px 0 0;font-size:13px;color:#C9CEF2;text-align:right}
+.ph{display:grid;grid-template-columns:1.3fr 1fr;gap:12px}
+.ph figure{margin:0;position:relative;border-radius:10px;overflow:hidden}
+.ph img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.ph figcaption{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(10,13,40,.85));color:#fff;font-size:13px;font-weight:700;padding:18px 10px 8px;line-height:1.4}
+@media (max-width:820px){
+.hv-in{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "cp" "cta" "vis" "photos";padding:24px 16px 32px;row-gap:18px}
+.hv h1{font-size:30px !important}.hv h1 .s{font-size:15px}
+.hv-cc{font-size:20px}.hv-sub{font-size:15px}
+.hv-bd{gap:8px}.hv-bd li{width:74px;height:74px;font-size:14px}
+.cp-big b{font-size:40px}
+.pv{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+.pv figure,.pv figure.t{flex:0 0 42%;aspect-ratio:1/1;scroll-snap-align:start}
+.pv-cap{text-align:left}
+}
+</style>
+<section class="hv">
+<div class="hv-in">
+<div class="a-head">
+<p class="hv-lb">テレビCMでおなじみ・全国2,500店舗以上</p>
+<h1><span class="s">斑鳩町で金・貴金属・ブランド品の買取なら</span><span class="g">買取大吉</span> 法隆寺店</h1>
+<p class="hv-cc">眠っている金、いくらになるか<br>知っていますか？</p>
+<p class="hv-sub">切れたネックレス1本から無料で査定します。ご相談だけでも大丈夫です。</p>
+<ul class="hv-bd" aria-label="法隆寺店の特長"><li>査定<br>無料</li><li>相談<br>だけOK</li><li>予約<br>不要</li></ul>
+<ul class="hv-bd" aria-label="来店のしやすさ"><li class="w">無料駐車場あり</li><li class="w">半個室で査定</li><li class="w">年中無休 10〜19時</li></ul>
 </div>
-<div style="flex: 1 1 320px; min-width: 0">
-<img src="img/store-front.webp" alt="買取大吉 法隆寺店の外観。木目調の看板が目印" width="1400" height="1050" fetchpriority="high" style="width: 100%; height: auto; border-radius: 10px; display: block">
+<div class="a-cp">
+<a class="cp" href="#coupon" aria-label="WEB限定クーポンを表示する（時計・アクセサリー買取金額30%UP、11月30日まで）">
+<div class="cp-top"><span>WEB限定クーポン｜11月30日（月）まで</span><span class="cd" id="cp-cd" hidden></span></div>
+<div class="cp-bd">
+<p class="cp-t">時計・アクセサリー</p>
+<p class="cp-big">買取金額 <b>30%</b>UP</p>
+<p class="cp-s">上記以外の品物も <strong style="color:#232C7A">10%UP</strong>・法隆寺店のみ</p>
+<span class="cp-btn">クーポンを表示する<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></span>
+</div>
+</a>
+</div>
+<div class="a-cta">
+<div class="btns"><a href="tel:0677776590" style="background:#C9A54C;color:#1A1A1A">無料で電話相談する<span>06-7777-6590・10〜19時</span></a><a href="https://line.me/ti/p/CZCmVd4SQf" style="background:#06C755;color:#0B2A16">LINEで写真を送って査定<span>撮って送るだけ・無料</span></a></div>
+<span class="hv-nt">※ご来店の予約は不要です。査定・ご相談は無料で、売らなくても大丈夫です。</span>
+</div>
+<div class="a-vis">
+<div class="pv">
+<figure class="t"><img src="img/hero/lv-neverfull.webp" alt="ルイ・ヴィトン ネヴァーフル" width="560" height="700" fetchpriority="high"></figure>
+<figure><img src="img/hero/chanel-mini-tophandle.webp" alt="シャネル ミニマトラッセ トップハンドル" width="560" height="420" fetchpriority="high"></figure>
+<figure><img src="img/hero/rolex-daytona-wg.webp" alt="ロレックス デイトナ ホワイトゴールド" width="560" height="420"></figure>
+<figure style="grid-column:span 2;aspect-ratio:2/1"><img src="img/hero/sapphire-baguette-ring.webp" alt="サファイア＆ダイヤモンド ゴールドリング" width="560" height="420"></figure>
+</div>
+<p class="pv-cap">法隆寺店で実際にお買取りした品物です</p>
+</div>
+<div class="a-photos">
+<div class="ph">
+<figure><img src="img/hero/store-front.webp" alt="買取大吉 法隆寺店の外観。木目調の看板が目印" width="720" height="540" loading="lazy"><figcaption>法隆寺駅から徒歩7分・無料駐車場あり</figcaption></figure>
+<figure><img src="img/hero/room.webp" alt="ほかのお客様の目が気にならない半個室の査定スペース" width="560" height="420" loading="lazy"><figcaption>半個室でゆっくり査定</figcaption></figure>
 </div>
 </div>
+</div>
+<script>
+(function(){var end=new Date('2026-11-30T23:59:59+09:00'),d=Math.ceil((end-new Date())/864e5),el=document.getElementById('cp-cd');if(!el)return;if(d>0){el.textContent=d===1?'本日まで':'あと'+d+'日';el.hidden=false;}})();
+</script>
 </section>
 <section style="background: #EEF0F7">
-<div style="max-width: 1120px; margin: 0 auto; padding: 0 24px 56px; display: flex; flex-direction: column; gap: 8px">
+<div style="max-width: 1120px; margin: 0 auto; padding: 28px 24px 48px; display: flex; flex-direction: column; gap: 8px">
 <div style="display: flex; flex-wrap: wrap; gap: 16px">
 <div style="flex: 1 1 260px; min-width: 0; background: #232C7A; color: #FFFFFF; border-radius: 10px; padding: 18px 24px; display: flex; align-items: baseline; justify-content: center; gap: 8px; flex-wrap: wrap">
 <span style="font-size: 15px; font-weight: 500">全国</span><span style="font-size: 36px; font-weight: 700; line-height: 1.2">2,500</span><span style="font-size: 15px; font-weight: 500">店舗以上</span>
@@ -500,9 +576,9 @@ if(ev)gtag('event',ev,{link_text:(a.textContent||'').trim().slice(0,40)});});}
 </footer>
 
 <nav aria-label="お問い合わせ" class="sticky-cta" style="position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; display: flex; gap: 8px; padding: 8px; background: rgba(255,255,255,0.96); border-top: 1px solid #DDE0EA; box-shadow: 0 -4px 16px rgba(0,0,0,0.08)">
-<a href="tel:0677776590" style="flex: 1; display: flex; align-items: center; justify-content: center; background: #C9A54C; color: #1A1A1A; text-decoration: none; font-weight: 700; font-size: 16px; border-radius: 8px; min-height: 48px">電話で相談</a>
-<a href="https://line.me/ti/p/CZCmVd4SQf" style="flex: 1; display: flex; align-items: center; justify-content: center; background: #06C755; color: #0B2A16; text-decoration: none; font-weight: 700; font-size: 16px; border-radius: 8px; min-height: 48px">LINEで査定</a>
-<a href="https://maps.app.goo.gl/qmBYRcdpAQeCupgSA" style="flex: 0 0 72px; display: flex; align-items: center; justify-content: center; background: #232C7A; color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 15px; border-radius: 8px; min-height: 48px">地図</a>
+<a href="#coupon" style="flex: 1; display: flex; align-items: center; justify-content: center; background: #C8102E; color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 15px; border-radius: 8px; min-height: 48px; line-height: 1.25; text-align: center">クーポン<br>30%UP</a><a href="tel:0677776590" style="flex: 1; display: flex; align-items: center; justify-content: center; background: #C9A54C; color: #1A1A1A; text-decoration: none; font-weight: 700; font-size: 15px; border-radius: 8px; min-height: 48px">電話相談</a>
+<a href="https://line.me/ti/p/CZCmVd4SQf" style="flex: 1; display: flex; align-items: center; justify-content: center; background: #06C755; color: #0B2A16; text-decoration: none; font-weight: 700; font-size: 15px; border-radius: 8px; min-height: 48px">LINE査定</a>
+<a href="https://maps.app.goo.gl/qmBYRcdpAQeCupgSA" style="flex: 0 0 56px; display: flex; align-items: center; justify-content: center; background: #232C7A; color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 15px; border-radius: 8px; min-height: 48px">地図</a>
 </nav>
 </div>
 </body>
