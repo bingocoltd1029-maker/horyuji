@@ -86,7 +86,7 @@ lb=f'''<h1>お買取り実績・店長ブログ</h1><p class="meta" style="margi
 <nav class="tb" aria-label="記事の種類"><a href="#all" data-f="all">すべて（{len(allp)}）</a><a href="#results" data-f="results">お買取り実績（{nres}）</a><a href="#column" data-f="column">店長ブログ（{len(allp)-nres}）</a></nav>
 <div id="list">{items}</div>
 <script>
-function f(){{var k=(location.hash||'#all').slice(1);if(['all','results','column'].indexOf(k)<0)k='all';document.querySelectorAll('.tb a').forEach(function(a){{a.classList.toggle('on',a.dataset.f===k)}});document.querySelectorAll('#list [data-k]').forEach(function(c){{c.style.display=(k==='all'||c.dataset.k===k)?'':'none'}})}}
+function f(){{var k=(location.hash||'#all').slice(1);if(['all','results','column'].indexOf(k)<0)k='all';document.querySelectorAll('.tb a').forEach(function(a){{a.classList.toggle('on',a.dataset.f===k)}});document.querySelectorAll('#list [data-k]').forEach(function(c){{c.style.display=(k==='all'||c.dataset.k===k)?'flex':'none'}})}}
 window.addEventListener('hashchange',f);f();
 </script>'''
 open(f'{ROOT}/blog/index.html','w',encoding='utf-8').write(page('お買取り実績・店長ブログ｜買取大吉 法隆寺店（斑鳩町）','買取大吉 法隆寺店（奈良県斑鳩町）の店長ブログ。金・ブランド品・時計の買取のコツやお知らせを更新しています。',f'{SITE}/blog/',lb,ogtype='website'))
