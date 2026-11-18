@@ -208,8 +208,9 @@ details.fq summary{font-weight:700;cursor:pointer;font-size:17px}
 .oc{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.oc a{background:#fff;border:1px solid #232C7A;border-radius:999px;padding:8px 14px;text-decoration:none;font-weight:700;font-size:15px}
 @media (max-width:600px){.rs,.pg2{grid-template-columns:1fr 1fr}.lead{font-size:17px}}
 </style>"""
-def cta2():
-    return f'<div class="cta2"><a href="/#coupon" style="background:#C8102E;color:#fff">WEBクーポンを見る<small>時計・アクセサリー30%UP（11/30まで）</small></a><a href="tel:0677776590" style="background:{GOLD};color:#1A1A1A">電話で相談する<small>06-7777-6590・10〜19時</small></a><a href="https://line.me/ti/p/CZCmVd4SQf" style="background:#06C755;color:#0B2A16">LINEで写真査定<small>撮って送るだけ・無料</small></a></div>'
+def cta2(c30=True):
+    sub='時計・アクセサリー30%UP（11/30まで）' if c30 else '対象や条件はお電話で確認できます'
+    return f'<div class="cta2"><a href="/#coupon" style="background:#C8102E;color:#fff">WEBクーポンを見る<small>{sub}</small></a><a href="tel:0677776590" style="background:{GOLD};color:#1A1A1A">電話で相談する<small>06-7777-6590・10〜19時</small></a><a href="https://line.me/ti/p/CZCmVd4SQf" style="background:#06C755;color:#0B2A16">LINEで写真査定<small>撮って送るだけ・無料</small></a></div>'
 for c in CATS:
     rs=[BYSLUG[s] for s in c['results'] if s in BYSLUG]
     rhtml=''.join(f'<a href="/blog/{q["slug"]}/"><img src="{q["img"]}" alt="{q.get("alt","")}" width="1400" height="1050" loading="lazy"><span>{q["title"].split("｜")[0].replace("をお買取りしました","")}</span></a>' for q in rs)
@@ -222,10 +223,13 @@ for c in CATS:
 <nav class="meta" aria-label="パンくず"><a href="/">買取大吉 法隆寺店</a> ＞ {c['name']}の買取</nav>
 <h1>{c['h1']}</h1>
 <p class="lead">{c['lead']}</p>
+<p style="margin:-6px 0 14px;font-weight:700;color:#232C7A">査定だけでも大歓迎です。金額を聞いてから、売るかどうかお決めいただけます。</p>
 <p class="meta" style="margin:-8px 0 0">査定無料・予約不要・半個室・無料駐車場10台以上・年中無休 10:00〜19:00（最終受付19:00）</p>
-{cta2()}
+{cta2(c['c30'])}
 <h2>こんな品物をお買取りしています</h2>
 <ul class="lst">{''.join(f'<li>{x}</li>' for x in c['items'])}</ul>
+<h2>{c['more'][0]}</h2>
+<p>{c['more'][1]}</p>
 <h2>査定で見るところ</h2>
 <div class="pts">{''.join(f'<div><b>{t}</b>{d}</div>' for t,d in c['points'])}</div>
 {f'<h2>法隆寺店のお買取り実績</h2><p class="meta" style="margin:0 0 10px">当店で実際にお買取りした品物です（写真は背景や明るさを調整しています）。</p><div class="rs">{rhtml}</div>' if rs else ''}
@@ -238,7 +242,7 @@ for c in CATS:
 <p style="margin:0">奈良県生駒郡斑鳩町興留5-1-35サンメゾン法隆寺。法隆寺駅から徒歩7分、万代 法隆寺店の向かい、chocoZAPの隣です。無料駐車場は建物の裏にあります（10台以上・他の施設と共用）。</p>
 <p style="margin:8px 0 0"><a href="{DIRURL}">今いる場所からの道順を見る</a> ／ <a href="/#access">道順の図を見る</a></p>
 <p class="meta" style="margin:8px 0 0">斑鳩町のほか、王寺町・安堵町・三郷町・平群町・河合町・大和郡山市からも、お車で来やすい場所です。</p>
-{cta2()}
+{cta2(c['c30'])}
 <h2>ほかの品物の買取</h2>
 <div class="oc">{others}<a href="/price/">参考価格100点</a></div>
 {STORECARD}"""
