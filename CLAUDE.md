@@ -18,13 +18,14 @@ GitHub Pages で公開。main に push すると1〜2分で https://horyuji.bng.
 - img/：写真（.jpgと.webp。ページでは.webpを使う）
 - blog/：店長ブログ（自動生成。直接編集しない）
 - _tools/posts.py：ブログ記事のデータ。新しい記事は POSTS の先頭に追加
-- _tools/build.py：`python3 _tools/build.py` でブログページ・一覧・sitemap.xml を作り直す
+- _tools/build.py：`python3 _tools/build.py` でブログページ・一覧・LPの実績/ブログ欄・参考価格ページ（/price/）・sitemap.xml を作り直す
+- _tools/price_raw.tsv：参考価格100点（カテゴリ／品名／価格／本部画像パス）。本部サイトから取得
 
 ## ブログ記事の追加手順
 1. 写真を img/ に保存（位置情報を消し、長辺1400pxに縮小、.jpgと.webpの両方）
 2. _tools/posts.py の POSTS 先頭に dict(slug, cat, img, alt, title, desc, body) を追加
 3. `python3 _tools/build.py` を実行
-4. 必要なら index.html のブログ欄（3枚）を差し替え
+4. index.html の「お買取り実績・店長ブログ」欄（各6件）は build.py が自動で更新する（AUTO:LATEST の間は手で直さない）
 5. commit して main に push
 
 ## 守ること
