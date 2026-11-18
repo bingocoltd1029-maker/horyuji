@@ -19,6 +19,8 @@ GitHub Pages で公開。main に push すると1〜2分で https://horyuji.bng.
 - blog/：店長ブログ（自動生成。直接編集しない）
 - _tools/posts.py：ブログ記事のデータ。新しい記事は POSTS の先頭に追加
 - _tools/build.py：`python3 _tools/build.py` でブログページ・一覧・LPの実績/ブログ欄・参考価格ページ（/price/）・sitemap.xml を作り直す
+- _tools/cats.py：品目別ページ6つ（/gold/ /jewelry/ /brand/ /watch/ /ihin/ /stamp-coin/）の中身。実績は実際の記事slugだけを入れる
+- index.html のA/Bテスト：FVの問いかけ文（.ab-a / .ab-b）。?ab=A / ?ab=B で確認。結果はGA4（GA_IDを入れたら）
 - _tools/price_raw.tsv：参考価格100点（カテゴリ／品名／価格／本部画像パス）。本部サイトから取得
 
 ## ブログ記事の追加手順
