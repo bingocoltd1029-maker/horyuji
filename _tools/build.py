@@ -106,7 +106,7 @@ pb=f"""<style>
 .fbs{{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}}
 .fb{{font:inherit;font-size:15px;font-weight:700;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid #232C7A;background:#fff;color:#232C7A;cursor:pointer}}
 .fb.on{{background:#232C7A;color:#fff}}
-.pg{{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}}
+.pg{{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}} @media (max-width:600px){{.pg{{grid-template-columns:1fr 1fr;gap:10px}} .pr{{font-size:20px}} .nm{{font-size:14px}} .fb{{min-height:40px;font-size:14px;padding:0 12px}}}}
 .pc{{background:#fff;border:1px solid #DDE0EA;border-radius:10px;overflow:hidden;display:flex;flex-direction:column}}
 .pc img{{width:100%;height:auto;aspect-ratio:335/230;object-fit:contain;background:#fff;display:block;border-bottom:1px solid #EEF0F7}}
 .pb{{padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px;flex:1}}
