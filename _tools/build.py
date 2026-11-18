@@ -214,13 +214,14 @@ def cta2(c30=True):
 for c in CATS:
     rs=[BYSLUG[s] for s in c['results'] if s in BYSLUG]
     rhtml=''.join(f'<a href="/blog/{q["slug"]}/"><img src="{q["img"]}" alt="{q.get("alt","")}" width="1400" height="1050" loading="lazy"><span>{q["title"].split("｜")[0].replace("をお買取りしました","")}</span></a>' for q in rs)
-    prs=[r for r in rows if r[0] in c['price']][:8]
+    prs=[r for r in rows if r[0] in c['price']]
+    prs=sorted(prs,key=lambda r:0 if any(k in r[1] for k in c.get('pricefirst',[])) else 1)[:8]
     phtml=''.join(f'<div><img src="{CDN}{quote(i)}" alt="{n}" width="335" height="230" loading="lazy" referrerpolicy="no-referrer"><p>{n}<b>{pz}円</b></p></div>' for ca,n,pz,i in prs)
     cols=[BYSLUG[s] for s in c['cols'] if s in BYSLUG]
     colhtml=('<h2>あわせて読みたい</h2><ul>'+''.join(f'<li><a href="/blog/{q["slug"]}/">{q["title"]}</a></li>' for q in cols)+'</ul>') if cols else ''
     others=''.join(f'<a href="/{o["slug"]}/">{o["name"]}</a>' for o in CATS if o['slug']!=c['slug'])
     b=f"""{CATCSS}
-<nav class="meta" aria-label="パンくず"><a href="/">買取大吉 法隆寺店</a> ＞ {c['name']}の買取</nav>
+<nav class="meta" aria-label="パンくず"><a href="/">買取大吉 法隆寺店</a> ＞ {c.get('crumb',c['name']+'の買取')}</nav>
 <h1>{c['h1']}</h1>
 <p class="lead">{c['lead']}</p>
 <p style="margin:-6px 0 14px;font-weight:700;color:#232C7A">査定だけでも大歓迎です。金額を聞いてから、売るかどうかお決めいただけます。</p>
@@ -247,7 +248,7 @@ for c in CATS:
 <div class="oc">{others}<a href="/price/">参考価格100点</a></div>
 {STORECARD}"""
     faqld={"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in c['faq']]}
-    bc={"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"買取大吉 法隆寺店","item":SITE+"/"},{"@type":"ListItem","position":2,"name":c['name']+"の買取","item":f"{SITE}/{c['slug']}/"}]}
+    bc={"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"買取大吉 法隆寺店","item":SITE+"/"},{"@type":"ListItem","position":2,"name":c.get('crumb',c['name']+"の買取"),"item":f"{SITE}/{c['slug']}/"}]}
     ld='<script type="application/ld+json">'+json.dumps(faqld,ensure_ascii=False)+'</script><script type="application/ld+json">'+json.dumps(bc,ensure_ascii=False)+'</script>'
     os.makedirs(f"{ROOT}/{c['slug']}",exist_ok=True)
     open(f"{ROOT}/{c['slug']}/index.html",'w',encoding='utf-8').write(page(c['title'],c['desc'],f"{SITE}/{c['slug']}/",b,ld,ogtype='website'))
