@@ -77,11 +77,19 @@ for p in POSTS:
     os.makedirs(f"{ROOT}/blog/{p['slug']}",exist_ok=True)
     open(f"{ROOT}/blog/{p['slug']}/index.html",'w',encoding='utf-8').write(page(p['title']+'｜買取大吉 法隆寺店',p['desc'],f"{SITE}/blog/{p['slug']}/",body,f'<script type="application/ld+json">{ld}</script>'))
 allp=POSTS+[OPEN]
-items=''.join(f'''<a href="/blog/{q['slug']}/" class="card" style="display:flex;flex-wrap:wrap;gap:16px;text-decoration:none;color:#1A1A1A;padding:0;overflow:hidden;margin-bottom:16px">
-<img src="{q['img']}" alt="" width="1400" height="1050" loading="lazy" style="flex:1 1 220px;min-width:0;height:160px;object-fit:cover">
-<div style="flex:999 1 280px;padding:16px 20px"><p class="meta" style="margin:0">{q['date'].replace('-','.')}　{q['cat']}</p><p style="margin:4px 0 0;font-weight:700;font-size:18px;line-height:1.6">{q['title']}</p></div></a>''' for q in allp)
-lb=f'<h1>店長ブログ</h1><p class="meta" style="margin-bottom:24px">斑鳩町・法隆寺の買取大吉 法隆寺店から、お買取り実績やお役立ち情報をお届けします。</p>{items}'
-open(f'{ROOT}/blog/index.html','w',encoding='utf-8').write(page('店長ブログ｜買取大吉 法隆寺店（斑鳩町）','買取大吉 法隆寺店（奈良県斑鳩町）の店長ブログ。金・ブランド品・時計の買取のコツやお知らせを更新しています。',f'{SITE}/blog/',lb,ogtype='website'))
+items=''.join(f'''<a href="/blog/{q['slug']}/" data-k="{'results' if q['cat']=='お買取り実績' else 'column'}" class="card" style="display:flex;align-items:center;gap:14px;text-decoration:none;color:#1A1A1A;padding:10px;margin-bottom:10px">
+<img src="{q['img']}" alt="" width="1400" height="1050" loading="lazy" style="flex:0 0 112px;width:112px;height:84px;object-fit:cover;border-radius:6px">
+<div style="min-width:0"><p class="meta" style="margin:0;line-height:1.5">{q['cat']}</p><p style="margin:2px 0 0;font-weight:700;font-size:16px;line-height:1.55">{q['title'].split('｜')[0]}</p></div></a>''' for q in allp)
+nres=sum(1 for q in allp if q['cat']=='お買取り実績')
+lb=f'''<h1>お買取り実績・店長ブログ</h1><p class="meta" style="margin-bottom:16px">斑鳩町・法隆寺の買取大吉 法隆寺店から、お買取り実績やお役立ち情報をお届けします。</p>
+<style>.tb{{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}}.tb a{{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid #232C7A;color:#232C7A;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;background:#fff}}.tb a.on{{background:#232C7A;color:#fff}}</style>
+<nav class="tb" aria-label="記事の種類"><a href="#all" data-f="all">すべて（{len(allp)}）</a><a href="#results" data-f="results">お買取り実績（{nres}）</a><a href="#column" data-f="column">店長ブログ（{len(allp)-nres}）</a></nav>
+<div id="list">{items}</div>
+<script>
+function f(){{var k=(location.hash||'#all').slice(1);if(['all','results','column'].indexOf(k)<0)k='all';document.querySelectorAll('.tb a').forEach(function(a){{a.classList.toggle('on',a.dataset.f===k)}});document.querySelectorAll('#list [data-k]').forEach(function(c){{c.style.display=(k==='all'||c.dataset.k===k)?'':'none'}})}}
+window.addEventListener('hashchange',f);f();
+</script>'''
+open(f'{ROOT}/blog/index.html','w',encoding='utf-8').write(page('お買取り実績・店長ブログ｜買取大吉 法隆寺店（斑鳩町）','買取大吉 法隆寺店（奈良県斑鳩町）の店長ブログ。金・ブランド品・時計の買取のコツやお知らせを更新しています。',f'{SITE}/blog/',lb,ogtype='website'))
 
 # ===== 買取参考価格ページ（_tools/price_raw.tsv：カテゴリ / 品名 / 価格 / 本部画像パス）=====
 from urllib.parse import quote
@@ -120,6 +128,46 @@ document.querySelectorAll('.fb').forEach(b=>b.addEventListener('click',()=>{{doc
 pb=pb.replace('{STORECARD}',STORECARD)
 os.makedirs(f'{ROOT}/price',exist_ok=True)
 open(f'{ROOT}/price/index.html','w',encoding='utf-8').write(page('買取参考価格 100点｜買取大吉 法隆寺店（斑鳩町）','金・ジュエリー・時計・バッグ・切手など、買取大吉の買取参考価格を写真付きで紹介。斑鳩町・法隆寺の買取大吉 法隆寺店では査定無料・予約不要です。',f'{SITE}/price/',pb,ogtype='website'))
+
+# ===== LPの「お買取り実績・店長ブログ」欄（index.html の AUTO:LATEST の間を書き換え）=====
+import re as _re
+def short(t):
+    t=t.split('｜')[0]
+    return _re.sub(r'をお買取りしました$','',t)
+def row(q,label):
+    return f'<a href="/blog/{q["slug"]}/" class="lt-row"><img src="{q["img"]}" alt="" width="1400" height="1050" loading="lazy"><span class="lt-tx"><span class="lt-cat">{label}</span><span class="lt-ti">{q["_t"]}</span></span></a>'
+res=[dict(q,_t=short(q['title'])) for q in POSTS if q['cat']=='お買取り実績']
+col=[dict(q,_t=q['title']) for q in POSTS if q['cat']!='お買取り実績']
+L=f"""<!-- AUTO:LATEST -->
+<section id="results" style="background: #F5F6FA; padding: 72px 24px">
+<style>
+#results .lt-grid{{display:flex;flex-wrap:wrap;gap:24px}}
+#results .lt-col{{flex:1 1 420px;min-width:0;background:#fff;border:1px solid #DDE0EA;border-radius:12px;padding:20px 20px 16px;display:flex;flex-direction:column}}
+#results .lt-h{{margin:0 0 4px;font-size:21px;line-height:1.5;border-left:5px solid #C9A54C;padding-left:12px}}
+#results .lt-row{{display:flex;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid #EEF0F7;text-decoration:none;color:#1A1A1A}}
+#results .lt-row img{{flex:0 0 96px;width:96px;height:72px;object-fit:cover;border-radius:6px;display:block}}
+#results .lt-tx{{display:flex;flex-direction:column;gap:2px;min-width:0}}
+#results .lt-cat{{font-size:13px;color:#5E6272}}
+#results .lt-ti{{font-size:16px;font-weight:700;line-height:1.5}}
+#results .lt-more{{align-self:center;margin-top:14px;background:#232C7A;color:#fff;text-decoration:none;font-weight:700;padding:12px 24px;border-radius:8px;min-height:48px;box-sizing:border-box;display:inline-flex;align-items:center}}
+</style>
+<div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 8px; text-align: center">
+<p style="margin: 0; font-size: 14px; color: #232C7A; font-weight: 700; letter-spacing: 0.16em">RESULTS &amp; BLOG</p>
+<h2 style="margin: 0; font-size: 30px; line-height: 1.5">お買取り実績・店長ブログ</h2>
+<p style="margin: 0; font-size: 15px; color: #3D4150">法隆寺店で実際にお買取りした品物と、売る前に知っておきたいことを書いています。</p>
+</div>
+<div class="lt-grid">
+<div class="lt-col"><h3 class="lt-h">法隆寺店のお買取り実績</h3>{''.join(row(q,'お買取り実績') for q in res[:6])}<a class="lt-more" href="/blog/#results">実績をもっと見る（全{len(res)}件）</a></div>
+<div id="blog" class="lt-col"><h3 class="lt-h">店長ブログ</h3>{''.join(row(q,q['cat']) for q in col[:6])}<a class="lt-more" href="/blog/#column">ブログをもっと見る（全{len(col)+1}件）</a></div>
+</div>
+<p style="margin: 0; font-size: 13px; color: #5E6272; text-align: center">※実績の写真は背景や明るさを調整しています。</p>
+</div>
+</section>
+<!-- /AUTO:LATEST -->"""
+ip=f'{ROOT}/index.html'; h=open(ip,encoding='utf-8').read()
+h=_re.sub(r'<!-- AUTO:LATEST -->.*?<!-- /AUTO:LATEST -->',lambda m:L,h,flags=_re.S)
+open(ip,'w',encoding='utf-8').write(h)
 urls=[('/',today),('/price/',today),('/blog/',today)]+[(f"/blog/{q['slug']}/",q['date']) for q in allp]
 open(f'{ROOT}/sitemap.xml','w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join(f'<url><loc>{SITE}{u}</loc><lastmod>{d}</lastmod></url>\n' for u,d in urls)+'</urlset>\n')
 print('built',len(POSTS),'posts')
