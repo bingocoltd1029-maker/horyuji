@@ -70,117 +70,125 @@ if(ev)gtag('event',ev,{link_text:(a.textContent||'').trim().slice(0,40),ab_fv:wi
 </div>
 </header>
 
-<!-- ヒーロー（ファーストビュー） -->
+<!-- ヒーロー（ファーストビュー）：ChatGPTのデザイン案をもとに作成 -->
 <style>
-.hv{background:radial-gradient(ellipse at 85% 20%,rgba(201,165,76,.22),transparent 55%),linear-gradient(160deg,#0E1338 0%,#1A2160 55%,#232C7A 100%);color:#fff;overflow:hidden}
-.hv-in{max-width:1120px;margin:0 auto;padding:36px 24px 56px;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);grid-template-areas:"head vis" "cp vis" "cta photos" "feat photos";column-gap:48px;row-gap:20px;align-items:start}
-.a-head{grid-area:head;display:flex;flex-direction:column;gap:14px}
-.a-cp{grid-area:cp}.a-cta{grid-area:cta;display:flex;flex-direction:column;gap:10px}
-.a-vis{grid-area:vis;align-self:start;justify-self:end;width:100%;max-width:460px}.a-photos{grid-area:photos;justify-self:end;width:100%;max-width:460px}.a-feat{grid-area:feat;display:flex;flex-direction:column;gap:12px}
-.hv-lb{margin:0;font-size:14px;color:#E2C77E;font-weight:700;letter-spacing:.06em}
-.hv h1{margin:0;font-weight:700;font-size:42px;line-height:1.35;color:#fff}
-.hv h1 .s{display:block;font-size:18px;margin-bottom:6px;font-weight:500;color:#E3E6F5}
-.hv h1 .g{font-family:'Noto Serif JP',serif;color:#E2C77E}
-.hv-cc{margin:0;font-family:'Noto Serif JP',serif;font-size:24px;font-weight:700;line-height:1.6}
-.hv-sub{margin:0;font-size:16px;color:#E3E6F5}
-.hv-tr{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:15px;font-weight:700;color:#fff}
-.hv-tr small{font-size:12px;font-weight:500;color:#C9CEF2}
-.hv-tr .op b{color:#7EE2A8}
-.mg{display:flex;gap:14px;align-items:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:12px 14px;text-decoration:none;color:#fff}
-.mg img{width:64px;height:64px;border-radius:50%;object-fit:cover;flex:0 0 64px}
-.mg span{font-size:15px;line-height:1.6}.mg b{color:#E2C77E}
-.hv-bd{display:flex;gap:12px;flex-wrap:wrap;margin:4px 0 0;padding:0;list-style:none}
-.hv-bd li{width:88px;height:88px;border-radius:50%;border:2px solid #C9A54C;background:rgba(14,19,56,.55);display:flex;align-items:center;justify-content:center;text-align:center;font-size:16px;font-weight:700;line-height:1.35}
-.hv-bd li.w{width:auto;height:auto;border-radius:999px;padding:6px 16px;font-size:14px;border-width:1px;border-color:rgba(255,255,255,.45)}
-.cp{display:block;text-decoration:none;color:#1A1A1A;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.28);border:2px solid #C9A54C}
-.cp-top{background:#C8102E;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 16px;font-weight:700;font-size:15px;flex-wrap:wrap}
-.cp-top .cd{background:#fff;color:#C8102E;border-radius:999px;padding:1px 10px;font-size:14px}
-.cp-bd{padding:14px 18px 16px;display:flex;flex-direction:column;gap:6px}
-.cp-t{margin:0;font-size:17px;font-weight:700;color:#232C7A}
-.cp-big{margin:0;font-size:20px;font-weight:700;line-height:1.3}
-.cp-big b{font-family:'Noto Serif JP',serif;font-size:46px;color:#C8102E;letter-spacing:-.01em}
-.cp-s{margin:0;font-size:15px;color:#3D4150}
-@media (min-width:821px){.cp-bd{display:grid;grid-template-columns:1fr auto;column-gap:16px;row-gap:2px;align-items:center}.cp-bd>p{grid-column:1}.cp-btn{grid-column:2;grid-row:1/4;margin-top:0 !important;padding:0 20px;flex-direction:column;min-height:96px !important;font-size:17px !important}}
-.cp-btn{margin-top:6px;display:flex;align-items:center;justify-content:center;gap:6px;min-height:52px;border-radius:10px;background:#C8102E;color:#fff;font-weight:700;font-size:18px}
-.btns{display:flex;flex-wrap:wrap;gap:10px}
-.btns a{flex:1 1 220px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;font-weight:700;font-size:17px;padding:10px 16px;border-radius:10px;min-height:56px;box-sizing:border-box;line-height:1.4}
-.btns a span{font-size:13px;font-weight:500}
-.hv-nt{font-size:14px;color:#C9CEF2}
-.pv{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.pv figure{margin:0;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;aspect-ratio:1/1}
-.pv img{width:100%;height:100%;max-height:100%;object-fit:contain;display:block}
-
-.pv-cap{margin:10px 0 0;font-size:13px;color:#C9CEF2;text-align:right}
-.ph{display:grid;grid-template-columns:1.3fr 1fr;gap:12px}
-.ph figure{margin:0;position:relative;border-radius:10px;overflow:hidden}
-.ph img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;display:block}
-.ph figcaption{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(10,13,40,.85));color:#fff;font-size:13px;font-weight:700;padding:18px 10px 8px;line-height:1.4}
-@media (max-width:820px){
-.hv-in{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "cp" "cta" "feat" "vis" "photos";padding:24px 16px 32px;row-gap:18px}
-.hv h1{font-size:30px !important}.hv h1 .s{font-size:15px}
-.hv-cc{font-size:20px}.hv-sub{font-size:15px}
-.hv-bd{gap:8px}.hv-bd li{width:74px;height:74px;font-size:14px}
-.cp-big b{font-size:40px}
-.pv{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;padding-bottom:4px;-webkit-overflow-scrolling:touch}
-.a-vis,.a-photos{max-width:none;justify-self:stretch}.pv figure{flex:0 0 42%;aspect-ratio:1/1;scroll-snap-align:start}
-.pv-cap{text-align:left}
+.hx-hero{--hx-navy:#232C7A;--hx-deep:#171F59;--hx-gold:#C9A54C;--hx-gold2:#E7C978;--hx-cream:#F7F4ED;position:relative;isolation:isolate;overflow:hidden;color:#fff;background:radial-gradient(ellipse at 82% 14%,rgba(201,165,76,.14),transparent 42%),linear-gradient(125deg,#171F59 0%,#232C7A 55%,#303B88 100%);padding:clamp(40px,5vw,80px) 24px clamp(44px,5vw,80px)}
+.hx-hero,.hx-hero *{box-sizing:border-box}.hx-hero a{text-decoration:none}.hx-hero a:focus-visible{outline:3px solid #fff;outline-offset:4px}
+.hx-hero::before{content:"";position:absolute;width:640px;height:640px;right:-300px;top:-340px;border:1px solid rgba(201,165,76,.2);border-radius:50%;pointer-events:none;z-index:-1}
+.hx-hero::after{content:"";position:absolute;width:420px;height:420px;left:-220px;bottom:-260px;border:1px solid rgba(201,165,76,.14);border-radius:50%;pointer-events:none;z-index:-1}
+.hx-inner{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(36px,5vw,72px);align-items:center}
+.hx-eyebrow{display:flex;align-items:center;gap:12px;margin:0 0 10px;color:var(--hx-gold2);font-size:14px;font-weight:700;letter-spacing:.14em}
+.hx-eyebrow i{display:block;width:36px;height:1px;background:var(--hx-gold)}
+.hx-region{font-size:14px;opacity:.9;margin:0 0 16px}
+.hx-title{margin:0;color:#fff;font-family:'Noto Serif JP',"Yu Mincho","Hiragino Mincho ProN",serif;font-size:clamp(31px,3.5vw,46px);font-weight:700;line-height:1.55;letter-spacing:.03em}
+.hx-title .g{color:var(--hx-gold2)}
+.hx-desc{font-size:16px;line-height:2;max-width:520px;color:rgba(255,255,255,.92);margin:16px 0 22px}
+.hx-desc a{color:var(--hx-gold2);font-weight:700;white-space:nowrap;text-decoration:underline !important;text-underline-offset:4px}
+.hx-coupon{display:block;width:100%;max-width:560px;overflow:hidden;border-radius:14px;color:var(--hx-deep);background:var(--hx-cream);border:2px solid var(--hx-gold);box-shadow:0 18px 46px rgba(0,0,0,.25),0 0 0 5px rgba(201,165,76,.1);transition:transform .2s ease,box-shadow .2s ease}
+.hx-coupon:hover{transform:translateY(-3px);box-shadow:0 22px 54px rgba(0,0,0,.3)}
+.hx-ctop{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding:11px 20px;border-bottom:1px solid rgba(201,165,76,.45);font-size:13px;font-weight:800;letter-spacing:.08em;color:#7A6328}
+.hx-ctop .cd{background:#C8102E;color:#fff;border-radius:999px;padding:2px 12px;letter-spacing:0;font-size:13px}
+.hx-cbody{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 22px}
+.hx-cinfo{display:flex;flex-direction:column;gap:6px}
+.hx-ccat{font-size:18px;font-weight:800;line-height:1.5}
+.hx-cben{font-size:15px;font-weight:700}
+.hx-csec{font-size:14px;font-weight:700;color:#5F532F}
+.hx-rate{display:flex;align-items:baseline;gap:2px;flex-shrink:0;color:var(--hx-navy);line-height:1;font-family:'Noto Serif JP',serif}
+.hx-rate strong{font-size:clamp(58px,6vw,82px);font-weight:700;letter-spacing:-.04em;color:#C8102E}
+.hx-rate>span{font-size:28px;font-weight:700;color:#C8102E}
+.hx-rate em{align-self:flex-end;margin-bottom:6px;font-size:16px;font-weight:800;font-style:normal}
+.hx-cbot{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--hx-gold);color:#172050;font-weight:800;font-size:17px;padding:15px 22px}
+.hx-arrow{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;border:1px solid rgba(23,32,80,.4);flex-shrink:0}
+.hx-cnote{margin:10px 0 0;font-size:13px;color:rgba(255,255,255,.78)}
+.hx-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:560px;margin-top:18px}
+.hx-btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:56px;padding:10px;border-radius:9px;font-size:16px;font-weight:800;transition:transform .2s ease;line-height:1.3;text-align:center}
+.hx-btn:hover{transform:translateY(-2px)}
+.hx-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.hx-btn--tel{background:#fff;color:var(--hx-navy)}.hx-btn--line{background:#06C755;color:#0B2A16}
+.hx-yoyaku{margin:12px 0 0;font-size:14px;font-weight:700;color:var(--hx-gold2)}
+.hx-reas{font-size:15px;font-weight:700;margin:14px 0 10px;line-height:1.8}
+.hx-trust{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.hx-trust li{border:1px solid rgba(255,255,255,.28);border-radius:100px;padding:6px 13px;font-size:13px;font-weight:700;background:rgba(255,255,255,.06)}
+.hx-trust li b{color:#7EE2A8}.hx-trust a{color:#fff}
+.hx-visual{display:flex;flex-direction:column;gap:12px}
+.hx-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.hx-product{margin:0;aspect-ratio:1.18;border-radius:10px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 28px rgba(0,0,0,.22);border:1px solid rgba(201,165,76,.35)}
+.hx-product img{width:100%;height:100%;object-fit:contain;display:block}
+.hx-gcap{font-size:13px;color:rgba(255,255,255,.8);text-align:center;margin:0 0 4px}
+.hx-store{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.hx-sp{position:relative;margin:0;aspect-ratio:1.6;overflow:hidden;border-radius:9px;background:#F0F0F0}
+.hx-sp img{display:block;width:100%;height:100%;object-fit:cover}
+.hx-sp::after{content:"";position:absolute;inset:40% 0 0;background:linear-gradient(transparent,rgba(13,21,58,.82));pointer-events:none}
+.hx-sp figcaption{position:absolute;z-index:1;left:12px;right:12px;bottom:10px;color:#fff;font-size:13px;font-weight:700;line-height:1.5}
+.hx-access{align-self:center;padding:8px;color:#fff;font-size:15px;font-weight:700;text-decoration:underline !important;text-underline-offset:5px}
+.hx-access span{color:var(--hx-gold2)}
+@media (min-width:901px){.hx-content{animation:hx-fade .55s ease-out both}.hx-visual{animation:hx-fade .65s .12s ease-out both}}
+@keyframes hx-fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (max-width:900px){
+.hx-hero{padding:26px 16px 34px}.hx-hero::before,.hx-hero::after{display:none}
+.hx-inner{display:flex;flex-direction:column;gap:28px}.hx-content,.hx-visual{width:100%}
+.hx-eyebrow{font-size:12px;margin-bottom:8px}.hx-region{font-size:14px;margin-bottom:12px}
+.hx-title{font-size:clamp(28px,7.5vw,38px) !important;line-height:1.6}
+.hx-desc{font-size:16px;line-height:1.85;margin:14px 0 18px}
+.hx-coupon{max-width:none;border-radius:12px}.hx-ctop{padding:10px 14px;font-size:12px}
+.hx-cbody{padding:16px 14px;gap:6px}.hx-ccat{font-size:16px}.hx-cben,.hx-csec{font-size:13px}
+.hx-rate strong{font-size:clamp(50px,14vw,72px)}.hx-rate>span{font-size:22px}.hx-rate em{font-size:13px}
+.hx-cbot{font-size:16px;padding:14px 16px}
+.hx-actions{max-width:none;gap:9px}.hx-btn{font-size:15px;min-height:54px}
+.hx-gallery{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;padding-bottom:4px}
+.hx-product{flex:0 0 44%;scroll-snap-align:start}
+.hx-sp figcaption{font-size:12px;left:9px;bottom:8px}
 }
+@media (max-width:360px){.hx-title{font-size:26px !important}.hx-rate strong{font-size:46px}.hx-btn{font-size:13px}}
+@media (prefers-reduced-motion:reduce){.hx-hero *,.hx-hero *::before,.hx-hero *::after{animation:none !important;transition:none !important}}
 </style>
-<section class="hv">
-<div class="hv-in">
-<div class="a-head">
-<p class="hv-lb">テレビCMでおなじみ・全国2,500店舗以上</p>
-<h1><span class="s">斑鳩町で金・貴金属・ブランド品の買取なら</span><span class="g">買取大吉</span> 法隆寺店</h1>
-<p class="hv-cc"><span class="ab-a">眠っている金、いくらになるか<br>知っていますか？</span><span class="ab-b">昔買った指輪、いまいくらになるか<br>気になりませんか？</span></p>
-<ul class="hv-tr" aria-label="お店の情報">
-<li><a href="https://maps.app.goo.gl/qmBYRcdpAQeCupgSA" style="color:inherit;text-decoration:none"><span style="color:#E2C77E">★</span> Googleの口コミ 4.9<small>（56件・11/18時点）</small></a></li>
-<li><span class="op" id="op-st">年中無休 10:00〜19:00</span></li>
-<li>法隆寺駅から徒歩7分・万代 法隆寺店の向かい</li>
-</ul>
-<p class="hv-sub">切れたネックレス1本から無料で査定します。ご相談だけでも大丈夫です。<a href="/price/" style="color:#E2C77E;font-weight:700;white-space:nowrap">参考価格を見る →</a></p>
-</div>
-<div class="a-cp">
-<a class="cp" href="#coupon" aria-label="WEB限定クーポンを表示する（時計・アクセサリー買取金額30%UP、11月30日まで）">
-<div class="cp-top"><span>WEB限定クーポン｜11月30日（月）まで</span><span class="cd" id="cp-cd" hidden></span></div>
-<div class="cp-bd">
-<p class="cp-t">時計・アクセサリー</p>
-<p class="cp-big">買取金額 <b>30%</b>UP</p>
-<p class="cp-s">上記以外の品物も <strong style="color:#232C7A">10%UP</strong>・法隆寺店のみ</p>
-<span class="cp-btn">クーポンを表示する<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></span>
-</div>
+<section class="hx-hero" aria-labelledby="hx-title">
+<div class="hx-inner">
+<div class="hx-content">
+<p class="hx-eyebrow"><i></i>テレビCMでおなじみ・全国2,500店舗以上</p>
+<p class="hx-region">奈良県斑鳩町・法隆寺駅から徒歩7分</p>
+<h1 class="hx-title" id="hx-title"><span style="display:block;font-size:.42em;font-family:'Noto Sans JP',sans-serif;font-weight:500;letter-spacing:.02em;color:rgba(255,255,255,.9);margin-bottom:6px">斑鳩町で金・貴金属・ブランド品の買取なら　<span class="g">買取大吉 法隆寺店</span></span><span class="ab-a">眠っている<span class="g">金・ジュエリー</span>、<br>いくらになるか<br>知っていますか？</span><span class="ab-b">昔買った<span class="g">指輪</span>、<br>いまいくらになるか<br>気になりませんか？</span></h1>
+<p class="hx-desc">切れたネックレス1本から無料で査定します。ご相談だけでも大丈夫です。<a href="/price/">参考価格を見る →</a></p>
+<a class="hx-coupon" href="#coupon" aria-label="WEB限定クーポンを表示する（時計・アクセサリー買取金額30%UP、11月30日まで）">
+<span class="hx-ctop"><span>WEB限定クーポン｜11月30日（月）まで</span><span class="cd" id="cp-cd" hidden></span></span>
+<span class="hx-cbody"><span class="hx-cinfo"><span class="hx-ccat">時計・アクセサリー</span><span class="hx-cben">買取金額が</span><span class="hx-csec">上記以外の品物も10%UP・法隆寺店のみ</span></span><span class="hx-rate"><strong>30</strong><span>%</span><em>UP</em></span></span>
+<span class="hx-cbot"><span>WEB限定クーポンを表示する</span><span class="hx-arrow" aria-hidden="true">↓</span></span>
 </a>
+<p class="hx-cnote">※対象の品物や条件は、クーポン欄でご確認ください。</p>
+<div class="hx-actions">
+<a class="hx-btn hx-btn--tel" href="tel:0677776590"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.09 5.18 2 2 0 0 1 5.08 3h3a2 2 0 0 1 2 1.72l.47 2.81a2 2 0 0 1-.57 1.73L8.1 11.14a16 16 0 0 0 4.76 4.76l1.88-1.88a2 2 0 0 1 1.73-.57l2.81.47A2 2 0 0 1 22 16.92Z"/></svg><span>無料で電話相談</span></a>
+<a class="hx-btn hx-btn--line" href="https://line.me/ti/p/CZCmVd4SQf"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 8.5-8.5h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg><span>LINEで写真査定</span></a>
 </div>
-<div class="a-cta">
-<div class="btns"><a href="tel:0677776590" style="background:#C9A54C;color:#1A1A1A">無料で電話相談する<span>06-7777-6590・10〜19時</span></a><a href="https://line.me/ti/p/CZCmVd4SQf" style="background:#06C755;color:#0B2A16">LINEで写真を送って査定<span>撮って送るだけ・無料</span></a></div>
-<p style="margin:0;font-size:15px;font-weight:700;color:#E2C77E">お電話でご来店予約いただくと、買取金額30%UP（上限1万円）</p>
-<span class="hv-nt">※ご来店の予約は不要です。査定・ご相談は無料で、売らなくても大丈夫です。</span>
+<p class="hx-yoyaku">お電話でご来店予約いただくと、買取金額30%UP（上限1万円）</p>
+<p class="hx-reas">査定無料 ・ 予約不要 ・ 売らなくても大丈夫</p>
+<ul class="hx-trust" aria-label="お店の情報">
+<li><a href="https://maps.app.goo.gl/qmBYRcdpAQeCupgSA"><span style="color:#E7C978">★</span> Googleの口コミ 4.9（56件・11/18時点）</a></li>
+<li id="op-st">年中無休 10:00〜19:00</li>
+<li>無料駐車場10台以上</li>
+<li>半個室で査定</li>
+</ul>
 </div>
-<div class="a-feat">
-<a class="mg" href="#manager"><img src="img/manager.webp" alt="店長の吉原" width="64" height="64" loading="lazy"><span><b>査定するのは店長の吉原です。</b><br>急かしたり、無理にすすめたりしません。ご相談だけでも大歓迎です。</span></a>
-<ul class="hv-bd" aria-label="法隆寺店の特長"><li>査定<br>無料</li><li>相談<br>だけOK</li><li>予約<br>不要</li></ul>
-<ul class="hv-bd" aria-label="来店のしやすさ"><li class="w">無料駐車場10台以上</li><li class="w">半個室で査定</li><li class="w">年中無休 10〜19時</li></ul>
+<div class="hx-visual">
+<div class="hx-gallery">
+<figure class="hx-product"><img src="img/hero/lv-neverfull.webp" alt="法隆寺店でお買取りしたルイ・ヴィトン ネヴァーフル" width="560" height="700" fetchpriority="high"></figure>
+<figure class="hx-product"><img src="img/hero/chanel-mini-tophandle.webp" alt="法隆寺店でお買取りしたシャネル ミニマトラッセ" width="560" height="420" fetchpriority="high"></figure>
+<figure class="hx-product"><img src="img/hero/rolex-daytona-wg.webp" alt="法隆寺店でお買取りしたロレックス デイトナ" width="560" height="420"></figure>
+<figure class="hx-product"><img src="img/hero/sapphire-baguette-ring.webp" alt="法隆寺店でお買取りしたサファイア＆ダイヤモンド ゴールドリング" width="560" height="420"></figure>
 </div>
-<div class="a-vis">
-<div class="pv">
-<figure><img src="img/hero/lv-neverfull.webp" alt="ルイ・ヴィトン ネヴァーフル" width="560" height="700" fetchpriority="high"></figure>
-<figure><img src="img/hero/chanel-mini-tophandle.webp" alt="シャネル ミニマトラッセ トップハンドル" width="560" height="420" fetchpriority="high"></figure>
-<figure><img src="img/hero/rolex-daytona-wg.webp" alt="ロレックス デイトナ ホワイトゴールド" width="560" height="420"></figure>
-<figure><img src="img/hero/sapphire-baguette-ring.webp" alt="サファイア＆ダイヤモンド ゴールドリング" width="560" height="420"></figure>
+<p class="hx-gcap">法隆寺店で実際にお買取りしたお品物です</p>
+<div class="hx-store">
+<figure class="hx-sp"><img src="img/hero/store-front.webp" alt="買取大吉 法隆寺店の外観" width="720" height="540" loading="lazy"><figcaption>万代 法隆寺店の向かい・chocoZAPの隣</figcaption></figure>
+<figure class="hx-sp"><img src="img/hero/room.webp" alt="ほかのお客様の目が気にならない半個室の査定スペース" width="560" height="420" loading="lazy"><figcaption>半個室でゆっくり査定</figcaption></figure>
 </div>
-<p class="pv-cap">法隆寺店で実際にお買取りした品物です</p>
-</div>
-<div class="a-photos">
-<div class="ph">
-<figure><img src="img/hero/store-front.webp" alt="買取大吉 法隆寺店の外観。木目調の看板が目印" width="720" height="540" loading="lazy"><figcaption>法隆寺駅から徒歩7分・無料駐車場あり</figcaption></figure>
-<figure><img src="img/hero/room.webp" alt="ほかのお客様の目が気にならない半個室の査定スペース" width="560" height="420" loading="lazy"><figcaption>半個室でゆっくり査定</figcaption></figure>
-</div>
+<a class="hx-access" href="https://www.google.com/maps/dir/?api=1&amp;destination=%E8%B2%B7%E5%8F%96%E5%A4%A7%E5%90%89%20%E6%B3%95%E9%9A%86%E5%AF%BA%E5%BA%97">今いる場所からの道順を見る <span aria-hidden="true">↗</span></a>
 </div>
 </div>
 <script>
-(function(){var n=new Date(Date.now()+9*36e5),h=n.getUTCHours()+n.getUTCMinutes()/60,o=document.getElementById('op-st');if(o)o.innerHTML=(h>=10&&h<19)?'<b>● ただいま営業中</b>（19時まで・予約不要）':'本日の営業 10:00〜19:00（年中無休）';})();
-(function(){var end=new Date('2026-11-30T23:59:59+09:00'),d=Math.ceil((end-new Date())/864e5),el=document.getElementById('cp-cd');if(!el)return;if(d>0){el.textContent=d===1?'本日まで':'あと'+d+'日';el.hidden=false;}else{var c=document.querySelector('.a-cp');if(c)c.style.display='none';var b=document.querySelector('.sticky-cta a[href="#coupon"]');if(b)b.style.display='none';}})();
+(function(){var n=new Date(Date.now()+9*36e5),h=n.getUTCHours()+n.getUTCMinutes()/60,o=document.getElementById('op-st');if(o)o.innerHTML=(h>=10&&h<19)?'<b>● ただいま営業中</b>（19時まで）':'本日の営業 10:00〜19:00（年中無休）';})();
+(function(){var end=new Date('2026-11-30T23:59:59+09:00'),d=Math.ceil((end-new Date())/864e5),el=document.getElementById('cp-cd');if(!el)return;if(d>0){el.textContent=d===1?'本日まで':'あと'+d+'日';el.hidden=false;}else{var c=document.querySelector('.hx-coupon');if(c){c.style.display='none';var nt=document.querySelector('.hx-cnote');if(nt)nt.style.display='none';}var b=document.querySelector('.sticky-cta a[href="#coupon"]');if(b)b.style.display='none';}})();
 </script>
 </section>
+
 <section style="background: #EEF0F7">
 <div style="max-width: 1120px; margin: 0 auto; padding: 28px 24px 48px; display: flex; flex-direction: column; gap: 8px">
 <div style="display: flex; flex-wrap: wrap; gap: 16px">
