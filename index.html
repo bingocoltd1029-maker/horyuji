@@ -66,10 +66,10 @@ if(ev)gtag('event',ev,{link_text:(a.textContent||'').trim().slice(0,40)});});}
 <!-- ヒーロー（ファーストビュー） -->
 <style>
 .hv{background:radial-gradient(ellipse at 85% 20%,rgba(201,165,76,.22),transparent 55%),linear-gradient(160deg,#0E1338 0%,#1A2160 55%,#232C7A 100%);color:#fff;overflow:hidden}
-.hv-in{max-width:1120px;margin:0 auto;padding:48px 24px 56px;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);grid-template-areas:"head vis" "cp vis" "cta photos";column-gap:48px;row-gap:22px;align-items:start}
+.hv-in{max-width:1120px;margin:0 auto;padding:48px 24px 56px;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);grid-template-areas:"head vis" "cp vis" "cta photos" "feat photos";column-gap:48px;row-gap:20px;align-items:start}
 .a-head{grid-area:head;display:flex;flex-direction:column;gap:14px}
 .a-cp{grid-area:cp}.a-cta{grid-area:cta;display:flex;flex-direction:column;gap:10px}
-.a-vis{grid-area:vis;align-self:center}.a-photos{grid-area:photos}
+.a-vis{grid-area:vis;align-self:start;justify-self:end;width:100%;max-width:460px}.a-photos{grid-area:photos;justify-self:end;width:100%;max-width:460px}.a-feat{grid-area:feat;display:flex;flex-direction:column;gap:12px}
 .hv-lb{margin:0;font-size:14px;color:#E2C77E;font-weight:700;letter-spacing:.06em}
 .hv h1{margin:0;font-weight:700;font-size:42px;line-height:1.35;color:#fff}
 .hv h1 .s{display:block;font-size:18px;margin-bottom:6px;font-weight:500;color:#E3E6F5}
@@ -95,20 +95,20 @@ if(ev)gtag('event',ev,{link_text:(a.textContent||'').trim().slice(0,40)});});}
 .pv{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .pv figure{margin:0;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;aspect-ratio:1/1}
 .pv img{width:100%;height:100%;object-fit:contain;display:block}
-.pv figure.t{grid-row:span 2;aspect-ratio:auto}
+
 .pv-cap{margin:10px 0 0;font-size:13px;color:#C9CEF2;text-align:right}
 .ph{display:grid;grid-template-columns:1.3fr 1fr;gap:12px}
 .ph figure{margin:0;position:relative;border-radius:10px;overflow:hidden}
 .ph img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
 .ph figcaption{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(10,13,40,.85));color:#fff;font-size:13px;font-weight:700;padding:18px 10px 8px;line-height:1.4}
 @media (max-width:820px){
-.hv-in{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "cp" "cta" "vis" "photos";padding:24px 16px 32px;row-gap:18px}
+.hv-in{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "cp" "cta" "feat" "vis" "photos";padding:24px 16px 32px;row-gap:18px}
 .hv h1{font-size:30px !important}.hv h1 .s{font-size:15px}
 .hv-cc{font-size:20px}.hv-sub{font-size:15px}
 .hv-bd{gap:8px}.hv-bd li{width:74px;height:74px;font-size:14px}
 .cp-big b{font-size:40px}
 .pv{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;padding-bottom:4px;-webkit-overflow-scrolling:touch}
-.pv figure,.pv figure.t{flex:0 0 42%;aspect-ratio:1/1;scroll-snap-align:start}
+.a-vis,.a-photos{max-width:none;justify-self:stretch}.pv figure{flex:0 0 42%;aspect-ratio:1/1;scroll-snap-align:start}
 .pv-cap{text-align:left}
 }
 </style>
@@ -119,8 +119,6 @@ if(ev)gtag('event',ev,{link_text:(a.textContent||'').trim().slice(0,40)});});}
 <h1><span class="s">斑鳩町で金・貴金属・ブランド品の買取なら</span><span class="g">買取大吉</span> 法隆寺店</h1>
 <p class="hv-cc">眠っている金、いくらになるか<br>知っていますか？</p>
 <p class="hv-sub">切れたネックレス1本から無料で査定します。ご相談だけでも大丈夫です。</p>
-<ul class="hv-bd" aria-label="法隆寺店の特長"><li>査定<br>無料</li><li>相談<br>だけOK</li><li>予約<br>不要</li></ul>
-<ul class="hv-bd" aria-label="来店のしやすさ"><li class="w">無料駐車場あり</li><li class="w">半個室で査定</li><li class="w">年中無休 10〜19時</li></ul>
 </div>
 <div class="a-cp">
 <a class="cp" href="#coupon" aria-label="WEB限定クーポンを表示する（時計・アクセサリー買取金額30%UP、11月30日まで）">
@@ -137,12 +135,16 @@ if(ev)gtag('event',ev,{link_text:(a.textContent||'').trim().slice(0,40)});});}
 <div class="btns"><a href="tel:0677776590" style="background:#C9A54C;color:#1A1A1A">無料で電話相談する<span>06-7777-6590・10〜19時</span></a><a href="https://line.me/ti/p/CZCmVd4SQf" style="background:#06C755;color:#0B2A16">LINEで写真を送って査定<span>撮って送るだけ・無料</span></a></div>
 <span class="hv-nt">※ご来店の予約は不要です。査定・ご相談は無料で、売らなくても大丈夫です。</span>
 </div>
+<div class="a-feat">
+<ul class="hv-bd" aria-label="法隆寺店の特長"><li>査定<br>無料</li><li>相談<br>だけOK</li><li>予約<br>不要</li></ul>
+<ul class="hv-bd" aria-label="来店のしやすさ"><li class="w">無料駐車場あり</li><li class="w">半個室で査定</li><li class="w">年中無休 10〜19時</li></ul>
+</div>
 <div class="a-vis">
 <div class="pv">
-<figure class="t"><img src="img/hero/lv-neverfull.webp" alt="ルイ・ヴィトン ネヴァーフル" width="560" height="700" fetchpriority="high"></figure>
+<figure><img src="img/hero/lv-neverfull.webp" alt="ルイ・ヴィトン ネヴァーフル" width="560" height="700" fetchpriority="high"></figure>
 <figure><img src="img/hero/chanel-mini-tophandle.webp" alt="シャネル ミニマトラッセ トップハンドル" width="560" height="420" fetchpriority="high"></figure>
 <figure><img src="img/hero/rolex-daytona-wg.webp" alt="ロレックス デイトナ ホワイトゴールド" width="560" height="420"></figure>
-<figure style="grid-column:span 2;aspect-ratio:2/1"><img src="img/hero/sapphire-baguette-ring.webp" alt="サファイア＆ダイヤモンド ゴールドリング" width="560" height="420"></figure>
+<figure><img src="img/hero/sapphire-baguette-ring.webp" alt="サファイア＆ダイヤモンド ゴールドリング" width="560" height="420"></figure>
 </div>
 <p class="pv-cap">法隆寺店で実際にお買取りした品物です</p>
 </div>
