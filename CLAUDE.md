@@ -15,6 +15,7 @@ GitHub Pages で公開。main に push すると1〜2分で https://horyuji.bng.
 
 ## ファイル
 - index.html：LP本体（1ファイル）
+- google96fb46d6bf441024.html：Googleサーチコンソールの所有権確認ファイル。消さない
 - img/：写真（.jpgと.webp。ページでは.webpを使う）
 - blog/：店長ブログ（自動生成。直接編集しない）
 - _tools/posts.py：ブログ記事のデータ。新しい記事は POSTS の先頭に追加
