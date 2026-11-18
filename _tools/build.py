@@ -62,6 +62,14 @@ STORECARD='''<div class="card" style="margin-top:32px">
 <a class="btn" href="/#coupon" style="background:#C8102E;color:#fff">WEBクーポンを見る</a>
 <a class="btn" href="/" style="background:#232C7A;color:#fff">お店のページへ</a>
 </div></div>'''
+
+from cats import CATS as _C
+_REV={}
+for _c in _C:
+    for _s in _c['results']+_c['cols']: _REV.setdefault(_s,_c)
+def catlink(p):
+    c=_REV.get(p['slug'])
+    return f'<p style="margin:24px 0 0"><a class="btn" href="/{c["slug"]}/" style="background:#232C7A;color:#fff">斑鳩町の{c["name"]}の買取について見る →</a></p>' if c else ''
 today=datetime.date.today().isoformat()
 for p in POSTS:
     p.setdefault('date',today)
@@ -71,6 +79,7 @@ for p in POSTS:
 <h1>{p['title']}</h1>
 <img src="{p['img']}" alt="{p['alt']}" width="1400" height="1050" style="border-radius:10px;margin:16px 0">
 {p['body']}
+{catlink(p)}
 </article>
 {STORECARD}'''
     ld=json.dumps({"@context":"https://schema.org","@type":"BlogPosting","headline":p['title'],"description":p['desc'],"datePublished":d,"dateModified":d,"image":SITE+p['img'].replace('.webp','.jpg'),"author":{"@type":"Person","name":"吉原 涼"},"publisher":{"@type":"Organization","name":"買取大吉 法隆寺店","logo":{"@type":"ImageObject","url":SITE+"/logo.png"}},"mainEntityOfPage":f"{SITE}/blog/{p['slug']}/"},ensure_ascii=False)
@@ -168,6 +177,76 @@ L=f"""<!-- AUTO:LATEST -->
 ip=f'{ROOT}/index.html'; h=open(ip,encoding='utf-8').read()
 h=_re.sub(r'<!-- AUTO:LATEST -->.*?<!-- /AUTO:LATEST -->',lambda m:L,h,flags=_re.S)
 open(ip,'w',encoding='utf-8').write(h)
-urls=[('/',today),('/price/',today),('/blog/',today)]+[(f"/blog/{q['slug']}/",q['date']) for q in allp]
+
+# ===== 品目別ページ（_tools/cats.py）=====
+from cats import CATS
+BYSLUG={q['slug']:q for q in POSTS}
+DIRURL='https://www.google.com/maps/dir/?api=1&amp;destination=%E8%B2%B7%E5%8F%96%E5%A4%A7%E5%90%89%20%E6%B3%95%E9%9A%86%E5%AF%BA%E5%BA%97'
+CATCSS="""<style>
+.wrap{max-width:960px!important}
+.lead{font-size:18px;line-height:1.9;margin:0 0 20px}
+.cta2{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0}
+.cta2 a{flex:1 1 200px;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:10px;font-weight:700;text-decoration:none;font-size:17px;line-height:1.35;text-align:center;padding:6px 10px}
+.cta2 a small{font-size:13px;font-weight:500}
+.lst{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px}
+.lst li{background:#fff;border:1px solid #DDE0EA;border-radius:8px;padding:10px 14px 10px 36px;position:relative;font-size:16px}
+.lst li:before{content:'✓';position:absolute;left:14px;color:#C9A54C;font-weight:700}
+.pts{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.pts div{background:#fff;border:1px solid #DDE0EA;border-radius:10px;padding:16px}
+.pts b{display:block;color:#232C7A;font-size:17px;margin-bottom:4px}
+.rs{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.rs a{background:#fff;border:1px solid #DDE0EA;border-radius:10px;overflow:hidden;text-decoration:none;color:#1A1A1A;display:flex;flex-direction:column}
+.rs img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;display:block}
+.rs span{padding:8px 10px;font-size:14px;font-weight:700;line-height:1.5}
+.pg2{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.pg2 div{background:#fff;border:1px solid #DDE0EA;border-radius:10px;overflow:hidden}
+.pg2 img{width:100%;height:auto;aspect-ratio:335/230;object-fit:contain;background:#fff;display:block}
+.pg2 p{margin:0;padding:8px 10px;font-size:14px;line-height:1.5}
+.pg2 b{display:block;color:#C8102E;font-size:19px}
+details.fq{background:#fff;border:1px solid #DDE0EA;border-radius:10px;padding:14px 16px;margin-bottom:8px}
+details.fq summary{font-weight:700;cursor:pointer;font-size:17px}
+.oc{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.oc a{background:#fff;border:1px solid #232C7A;border-radius:999px;padding:8px 14px;text-decoration:none;font-weight:700;font-size:15px}
+@media (max-width:600px){.rs,.pg2{grid-template-columns:1fr 1fr}.lead{font-size:17px}}
+</style>"""
+def cta2():
+    return f'<div class="cta2"><a href="/#coupon" style="background:#C8102E;color:#fff">WEBクーポンを見る<small>時計・アクセサリー30%UP（11/30まで）</small></a><a href="tel:0677776590" style="background:{GOLD};color:#1A1A1A">電話で相談する<small>06-7777-6590・10〜19時</small></a><a href="https://line.me/ti/p/CZCmVd4SQf" style="background:#06C755;color:#0B2A16">LINEで写真査定<small>撮って送るだけ・無料</small></a></div>'
+for c in CATS:
+    rs=[BYSLUG[s] for s in c['results'] if s in BYSLUG]
+    rhtml=''.join(f'<a href="/blog/{q["slug"]}/"><img src="{q["img"]}" alt="{q.get("alt","")}" width="1400" height="1050" loading="lazy"><span>{q["title"].split("｜")[0].replace("をお買取りしました","")}</span></a>' for q in rs)
+    prs=[r for r in rows if r[0] in c['price']][:8]
+    phtml=''.join(f'<div><img src="{CDN}{quote(i)}" alt="{n}" width="335" height="230" loading="lazy" referrerpolicy="no-referrer"><p>{n}<b>{pz}円</b></p></div>' for ca,n,pz,i in prs)
+    cols=[BYSLUG[s] for s in c['cols'] if s in BYSLUG]
+    colhtml=('<h2>あわせて読みたい</h2><ul>'+''.join(f'<li><a href="/blog/{q["slug"]}/">{q["title"]}</a></li>' for q in cols)+'</ul>') if cols else ''
+    others=''.join(f'<a href="/{o["slug"]}/">{o["name"]}</a>' for o in CATS if o['slug']!=c['slug'])
+    b=f"""{CATCSS}
+<nav class="meta" aria-label="パンくず"><a href="/">買取大吉 法隆寺店</a> ＞ {c['name']}の買取</nav>
+<h1>{c['h1']}</h1>
+<p class="lead">{c['lead']}</p>
+<p class="meta" style="margin:-8px 0 0">査定無料・予約不要・半個室・無料駐車場10台以上・年中無休 10:00〜19:00（最終受付19:00）</p>
+{cta2()}
+<h2>こんな品物をお買取りしています</h2>
+<ul class="lst">{''.join(f'<li>{x}</li>' for x in c['items'])}</ul>
+<h2>査定で見るところ</h2>
+<div class="pts">{''.join(f'<div><b>{t}</b>{d}</div>' for t,d in c['points'])}</div>
+{f'<h2>法隆寺店のお買取り実績</h2><p class="meta" style="margin:0 0 10px">当店で実際にお買取りした品物です（写真は背景や明るさを調整しています）。</p><div class="rs">{rhtml}</div>' if rs else ''}
+{f'<h2>買取参考価格（全国の買取大吉の例）</h2><p class="meta" style="margin:0 0 10px">買取大吉 公式サイト掲載の参考価格・写真（{PRICE_DATE}時点）。法隆寺店の買取金額を保証するものではありません。状態・付属品・その日の相場で変わります。</p><div class="pg2">{phtml}</div><p style="margin:10px 0 0"><a href="/price/">参考価格をもっと見る（100点）→</a></p>' if prs else ''}
+<h2>よくあるご質問</h2>
+{''.join(f'<details class="fq"><summary>Q. {q}</summary><p style="margin:10px 0 0">A. {a}</p></details>' for q,a in c['faq'])}
+<details class="fq"><summary>Q. 何を持って行けばいいですか？</summary><p style="margin:10px 0 0">A. お品物と、運転免許証やマイナンバーカードなどの本人確認書類をお持ちください。</p></details>
+{colhtml}
+<h2>お店の場所</h2>
+<p style="margin:0">奈良県生駒郡斑鳩町興留5-1-35サンメゾン法隆寺。法隆寺駅から徒歩7分、万代 法隆寺店の向かい、chocoZAPの隣です。無料駐車場は建物の裏にあります（10台以上・他の施設と共用）。</p>
+<p style="margin:8px 0 0"><a href="{DIRURL}">今いる場所からの道順を見る</a> ／ <a href="/#access">道順の図を見る</a></p>
+<p class="meta" style="margin:8px 0 0">斑鳩町のほか、王寺町・安堵町・三郷町・平群町・河合町・大和郡山市からも、お車で来やすい場所です。</p>
+{cta2()}
+<h2>ほかの品物の買取</h2>
+<div class="oc">{others}<a href="/price/">参考価格100点</a></div>
+{STORECARD}"""
+    faqld={"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in c['faq']]}
+    bc={"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"買取大吉 法隆寺店","item":SITE+"/"},{"@type":"ListItem","position":2,"name":c['name']+"の買取","item":f"{SITE}/{c['slug']}/"}]}
+    ld='<script type="application/ld+json">'+json.dumps(faqld,ensure_ascii=False)+'</script><script type="application/ld+json">'+json.dumps(bc,ensure_ascii=False)+'</script>'
+    os.makedirs(f"{ROOT}/{c['slug']}",exist_ok=True)
+    open(f"{ROOT}/{c['slug']}/index.html",'w',encoding='utf-8').write(page(c['title'],c['desc'],f"{SITE}/{c['slug']}/",b,ld,ogtype='website'))
+urls=[('/',today),('/price/',today)]+[(f"/{c['slug']}/",today) for c in CATS]+[('/blog/',today)]+[(f"/blog/{q['slug']}/",q['date']) for q in allp]
 open(f'{ROOT}/sitemap.xml','w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join(f'<url><loc>{SITE}{u}</loc><lastmod>{d}</lastmod></url>\n' for u,d in urls)+'</urlset>\n')
 print('built',len(POSTS),'posts')
