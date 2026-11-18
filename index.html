@@ -42,6 +42,21 @@ document.addEventListener('click',function(e){var a=e.target.closest('a');if(!a)
 if(h.indexOf('tel:')===0)ev='tel_click';else if(h.indexOf('line.me')>-1)ev='line_click';else if(h.indexOf('maps.app.goo.gl')>-1||h.indexOf('google.com/maps')>-1)ev='map_click';else if(h==='#coupon')ev='coupon_click';else if(h==='#visit')ev='visit_click';else if(h.indexOf('instagram.com')>-1)ev='instagram_click';
 if(ev)gtag('event',ev,{link_text:(a.textContent||'').trim().slice(0,40),ab_fv:window.AB_FV});});}
 </script>
+<style id="ds">
+/* デザインシステム（広告視点の統一感：明朝見出し・金の飾り線・アイボリー・麻の葉） */
+:root{--ds-navy:#232C7A;--ds-gold:#C9A54C;--ds-ivory:#F7F4ED}
+section:not(.hx-hero) h2{font-family:'Noto Serif JP',serif !important;font-weight:700 !important;letter-spacing:.04em;position:relative;padding-bottom:16px}
+section:not(.hx-hero) h2::after{content:"";display:block;width:56px;height:2px;background:linear-gradient(90deg,transparent,var(--ds-gold),transparent);margin:14px auto 0}
+section:not(.hx-hero) [style*="text-align: center"] h2::after,section:not(.hx-hero) h2[style*="center"]::after{margin-left:auto;margin-right:auto}
+section:not(.hx-hero) div:not([style*="text-align: center"])>h2::after{margin-left:0}
+section p[style*="letter-spacing: 0.16em"]{color:var(--ds-gold) !important;display:inline-flex;align-items:center;gap:10px;justify-content:center;align-self:center}
+section p[style*="letter-spacing: 0.16em"]::before,section p[style*="letter-spacing: 0.16em"]::after{content:"";width:24px;height:1px;background:var(--ds-gold)}
+section[style*="#F5F6FA"],section[style*="#EEF0F7"]{background-color:var(--ds-ivory) !important}
+section [style*="background: #FFFFFF; border: 1px solid #DDE0EA"],section [style*="background: #F5F6FA; border-radius: 10px"]{box-shadow:0 6px 20px rgba(35,44,122,.07);border-top:3px solid var(--ds-gold) !important}
+section[style*="#161B45"],section[style*="#232C7A"],section[style*="#12163F"]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='104' viewBox='0 0 60 104'%3E%3Cg fill='none' stroke='%23C9A54C' stroke-opacity='.12' stroke-width='1'%3E%3Cpath d='M30 0L60 17.3V52L30 69.3 0 52V17.3zM30 0v69.3M0 17.3L60 52M60 17.3L0 52M30 34.6L0 17.3M30 34.6L60 17.3M30 34.6V69.3M30 69.3L60 86.6V104M30 69.3L0 86.6V104'/%3E%3C/g%3E%3C/svg%3E") !important}
+#coupon img[src*="coupon"]{box-shadow:0 10px 30px rgba(0,0,0,.12)}
+@media (max-width:820px){section:not(.hx-hero) h2{font-size:24px !important;line-height:1.55 !important}body p{line-height:1.9}}
+</style>
 </head>
 <body>
 <div style="font-family: 'Noto Sans JP', sans-serif; color: #1A1A1A; background: #F5F6FA; line-height: 1.8; font-size: 16px">
