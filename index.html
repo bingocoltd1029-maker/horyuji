@@ -34,13 +34,27 @@ window.AB_FV=v;document.documentElement.setAttribute('data-ab',v);})();
 </script>
 <style>[data-ab="A"] .ab-b,[data-ab="B"] .ab-a{display:none}</style>
 <script>
-/* GA4：測定ID（G-から始まる）をGA_IDに入れると計測が始まります */
-var GA_ID='';
-if(GA_ID){var g=document.createElement('script');g.async=true;g.src='https://www.googletagmanager.com/gtag/js?id='+GA_ID;document.head.appendChild(g);
-window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments);};gtag('js',new Date());gtag('config',GA_ID,{ab_fv:window.AB_FV});gtag('event','ab_view',{ab_fv:window.AB_FV});
-document.addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;var h=a.getAttribute('href')||'';var ev=null;
-if(h.indexOf('tel:')===0)ev='tel_click';else if(h.indexOf('line.me')>-1)ev='line_click';else if(h.indexOf('maps.app.goo.gl')>-1||h.indexOf('google.com/maps')>-1)ev='map_click';else if(h==='#coupon')ev='coupon_click';else if(h==='#visit')ev='visit_click';else if(h.indexOf('instagram.com')>-1)ev='instagram_click';
-if(ev)gtag('event',ev,{link_text:(a.textContent||'').trim().slice(0,40),ab_fv:window.AB_FV});});}
+/* 計測：IDを入れると動きます（どれか1つでも可。GTMを使う場合はGA4・ClarityはGTMの中で設定し、下のGA_ID・CLARITY_IDは空のままにする）
+   GTM_ID：Googleタグマネージャー（GTM-から始まる）
+   GA_ID：GA4の測定ID（G-から始まる）
+   CLARITY_ID：Microsoft Clarity（ヒートマップ・録画）のプロジェクトID */
+var GTM_ID='',GA_ID='',CLARITY_ID='';
+window.dataLayer=window.dataLayer||[];
+function mt(ev,p){p=p||{};p.ab_fv=window.AB_FV;var o={event:ev};for(var k in p)o[k]=p[k];dataLayer.push(o);if(GA_ID&&window.gtag)gtag('event',ev,p);if(window.clarity)clarity('event',ev);}
+if(GTM_ID){dataLayer.push({'gtm.start':new Date().getTime(),event:'gtm.js',ab_fv:window.AB_FV});var t=document.createElement('script');t.async=true;t.src='https://www.googletagmanager.com/gtm.js?id='+GTM_ID;document.head.appendChild(t);}
+if(GA_ID){var g=document.createElement('script');g.async=true;g.src='https://www.googletagmanager.com/gtag/js?id='+GA_ID;document.head.appendChild(g);window.gtag=function(){dataLayer.push(arguments);};gtag('js',new Date());gtag('config',GA_ID,{ab_fv:window.AB_FV});}
+if(CLARITY_ID){(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",CLARITY_ID);clarity('set','ab_fv',window.AB_FV);}
+mt('ab_view');
+/* ボタンのクリック */
+document.addEventListener('click',function(e){var a=e.target.closest('a,summary');if(!a)return;var h=a.getAttribute('href')||'';var ev=null;
+if(a.tagName==='SUMMARY')ev='faq_open';else if(h.indexOf('tel:')===0)ev='tel_click';else if(h.indexOf('line.me')>-1)ev='line_click';else if(h.indexOf('maps.app.goo.gl')>-1||h.indexOf('google.com/maps')>-1)ev='map_click';else if(h==='#coupon')ev='coupon_click';else if(h==='#visit')ev='visit_click';else if(h.indexOf('instagram.com')>-1)ev='instagram_click';else if(h.indexOf('/price/')===0)ev='price_click';
+if(ev)mt(ev,{link_text:(a.textContent||'').trim().slice(0,40),place:a.closest('.sticky-cta')?'sticky':((a.closest('section[id]')||{}).id||'hero')});});
+/* どこまで読まれたか（セクションごと・スクロール率）→ 離脱した場所がわかる */
+document.addEventListener('DOMContentLoaded',function(){
+if('IntersectionObserver' in window){var seen={},n=0;var io=new IntersectionObserver(function(es){es.forEach(function(en){if(!en.isIntersecting)return;var t=en.target,h2=t.querySelector('h2'),id=t.classList.contains('hx-hero')?'hero':(t.id||(h2?h2.textContent.trim().slice(0,20):'section'));if(seen[id])return;seen[id]=1;n++;mt('section_view',{section:id,order:n});io.unobserve(en.target);});},{threshold:.35});
+document.querySelectorAll('section').forEach(function(el){io.observe(el);});}
+var marks=[25,50,75,90],done={};addEventListener('scroll',function(){var h=document.documentElement,r=(h.scrollTop+innerHeight)/h.scrollHeight*100;marks.forEach(function(m){if(r>=m&&!done[m]){done[m]=1;mt('scroll_depth',{percent:m});}});},{passive:true});
+});
 </script>
 <style id="ds">
 /* デザインシステム（広告視点の統一感：明朝見出し・金の飾り線・アイボリー・麻の葉） */
