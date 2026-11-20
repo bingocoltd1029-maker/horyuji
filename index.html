@@ -573,6 +573,41 @@ section p[style*="letter-spacing: 0.16em"]{font-size:12px !important}
 </div>
 </footer>
 
+
+<!-- 記事はページを移らずにその場で開く（離脱を防ぐ） -->
+<div id="pm" class="pm" hidden role="dialog" aria-modal="true" aria-label="記事">
+<div class="pm-bg" data-close></div>
+<div class="pm-box"><button class="pm-x" type="button" data-close aria-label="閉じる">×</button><div class="pm-body" id="pm-body"></div>
+<div class="pm-cta"><a class="cta-line" href="https://line.me/ti/p/CZCmVd4SQf">LINE追加でクーポンをもらう</a><a class="cta-tel" href="tel:0677776590">お電話で無料相談・来店予約</a></div></div>
+</div>
+<style>
+.pm{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center}
+.pm[hidden]{display:none}
+.pm-bg{position:absolute;inset:0;background:rgba(18,22,63,.6)}
+.pm-box{position:relative;background:#FBF9F4;width:min(760px,94vw);max-height:88vh;overflow:auto;border-radius:10px;border-top:3px solid #C9A54C;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.pm-x{position:sticky;top:8px;float:right;margin:8px 8px 0 0;width:44px;height:44px;border-radius:50%;border:1px solid #DDE0EA;background:#fff;font-size:26px;line-height:1;color:#232C7A;cursor:pointer;z-index:2}
+.pm-body{padding:8px 24px 8px;color:#292D35}
+.pm-body h1{font-family:'Noto Serif JP',serif;font-size:23px;line-height:1.6;margin:8px 0 4px;color:#232C7A}
+.pm-body h2{font-size:19px;margin:24px 0 8px;border-left:4px solid #C9A54C;padding-left:10px}
+.pm-body p,.pm-body li{font-size:16px;line-height:1.9}
+.pm-body img{width:100%;height:auto;border-radius:8px}
+.pm-body .meta{font-size:13px;color:#5E6272;margin:0}
+.pm-body a.btn{display:none}
+.pm-cta{position:sticky;bottom:0;display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px;background:rgba(251,249,244,.97);border-top:1px solid #E3DCC8}
+.pm-cta a{display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:8px;color:#fff;font-weight:700;text-decoration:none;font-size:15px;text-align:center}
+@media (max-width:600px){.pm-box{width:100vw;max-height:92vh;border-radius:10px 10px 0 0;align-self:flex-end}.pm-cta{grid-template-columns:1fr}.pm-body{padding:4px 16px}}
+</style>
+<script>
+(function(){var pm=document.getElementById('pm'),body=document.getElementById('pm-body'),last=null;
+function close(){pm.hidden=true;document.body.style.overflow='';if(last)last.focus();}
+pm.addEventListener('click',function(e){if(e.target.hasAttribute('data-close'))close();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!pm.hidden)close();});
+document.addEventListener('click',function(e){var a=e.target.closest('a[href^="/blog/"]');if(!a||pm.contains(a))return;var h=a.getAttribute('href');if(!/^\/blog\/[^\/]+\/$/.test(h))return;
+e.preventDefault();last=a;body.innerHTML='<p style="padding:40px 0;text-align:center">読み込み中…</p>';pm.hidden=false;document.body.style.overflow='hidden';
+if(window.mt)mt('article_open',{path:h});
+fetch(h).then(function(r){return r.text()}).then(function(t){var d=new DOMParser().parseFromString(t,'text/html'),ar=d.querySelector('article');body.innerHTML=ar?ar.innerHTML:'';body.scrollTop=0;pm.querySelector('.pm-box').scrollTop=0;}).catch(function(){location.href=h;});});
+})();
+</script>
 <nav aria-label="お問い合わせ" class="sticky-cta">
 <a class="sc-line" href="https://line.me/ti/p/CZCmVd4SQf"><small>LINE追加で</small>クーポン</a>
 <a class="sc-tel" href="tel:0677776590"><small>お電話で</small>無料相談</a>
