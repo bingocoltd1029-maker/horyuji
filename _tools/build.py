@@ -72,7 +72,7 @@ def catlink(p):
     return f'<p style="margin:24px 0 0"><a class="btn" href="/{c["slug"]}/" style="background:#232C7A;color:#fff">斑鳩町の{c["name"]}の買取について見る →</a></p>' if c else ''
 today=datetime.date.today().isoformat()
 for p in POSTS:
-    p.setdefault('date',today)
+    p.setdefault('date','2026-11-18')
     d=p['date']
     body=f'''<article>
 <p class="meta">{d.replace('-','.')}　{p['cat']}</p>
