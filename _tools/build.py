@@ -262,7 +262,7 @@ for c in CATS:
 <p class="meta" style="margin:8px 0 0">斑鳩町のほか、王寺町・安堵町・三郷町・平群町・河合町・大和郡山市からも、お車で来やすい場所です。</p>
 {cta2(c['c30'])}
 <h2>ほかの品物の買取</h2>
-<div class="oc">{others}<a href="/price/">参考価格100点</a></div>
+<div class="oc">{others}<a href="/price/">参考価格{len(rows)}点</a></div>
 {STORECARD}"""
     faqld={"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in c['faq']]}
     bc={"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"買取大吉 法隆寺店","item":SITE+"/"},{"@type":"ListItem","position":2,"name":c.get('crumb',c['name']+"の買取"),"item":f"{SITE}/{c['slug']}/"}]}
