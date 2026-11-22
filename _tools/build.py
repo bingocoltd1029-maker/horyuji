@@ -108,10 +108,17 @@ open(f'{ROOT}/blog/index.html','w',encoding='utf-8').write(page('お買取り実
 
 # ===== 買取参考価格ページ（_tools/price_raw.tsv：カテゴリ / 品名 / 価格 / 本部画像パス）=====
 from urllib.parse import quote
-PRICE_DATE='2026年11月18日'
+PRICE_DATE='2026年11月22日'
 CDN='https://cdn.speedsize.com/238b2c9c-0e0b-44a9-9a48-93e2951b75dc/www.kaitori-daikichi.jp/cms/wp-content/uploads/'
-rows=[l.rstrip('\n').split('\t') for l in open(os.path.join(os.path.dirname(__file__),'price_raw.tsv'),encoding='utf-8') if l.strip()]
-CATS=['金・貴金属','ジュエリー','時計','バッグ','財布・小物','お酒','切手','古銭・記念硬貨','服','カメラ']
+rows=[l.rstrip('\n').split('\t')[:4] for l in open(os.path.join(os.path.dirname(__file__),'price_raw.tsv'),encoding='utf-8') if l.strip()]
+_seen={r[1].replace('　',' ') for r in rows}
+_hq=os.path.join(os.path.dirname(__file__),'price_hq.tsv')
+if os.path.exists(_hq):
+    for l in open(_hq,encoding='utf-8'):
+        f=l.rstrip('\n').split('\t')
+        if len(f)>=4 and f[2] and f[1].replace('　',' ') not in _seen:
+            _seen.add(f[1].replace('　',' ')); rows.append(f[:4])
+CATS=['金・貴金属','ジュエリー','時計','バッグ','財布・小物','服','お酒','切手','古銭・記念硬貨','金券・チケット','カメラ','スマホ・タブレット','トレカ']
 rows.sort(key=lambda r:CATS.index(r[0]) if r[0] in CATS else 99)
 cards=''.join(f'<div class="pc" data-cat="{c}"><img src="{CDN}{quote(i)}" alt="{n}" width="335" height="230" loading="lazy" referrerpolicy="no-referrer"><div class="pb"><span class="tag">{c}</span><span class="nm">{n}</span><span class="lb">買取参考価格</span><span class="pr">{p}<small>円</small></span></div></div>' for c,n,p,i in rows)
 present=[c for c in CATS if any(r[0]==c for r in rows)]
@@ -121,6 +128,8 @@ pb=f"""<style>
 .fbs{{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}}
 .fb{{font:inherit;font-size:15px;font-weight:700;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid #232C7A;background:#fff;color:#232C7A;cursor:pointer}}
 .fb.on{{background:#232C7A;color:#fff}}
+.srch{{margin:0 0 12px}}.srch input{{width:100%;box-sizing:border-box;font:inherit;font-size:17px;min-height:52px;padding:0 16px;border:2px solid #C9A54C;border-radius:10px;background:#fff}}
+.cnt{{margin:-8px 0 12px;font-weight:700;color:#232C7A}}.nohit{{font-weight:700;color:#232C7A;padding:20px 0}}
 .pg{{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}} @media (max-width:600px){{.pg{{grid-template-columns:1fr 1fr;gap:10px}} .pr{{font-size:20px}} .nm{{font-size:14px}} .fb{{min-height:40px;font-size:14px;padding:0 12px}}}}
 .pc{{background:#fff;border:1px solid #DDE0EA;border-radius:10px;overflow:hidden;display:flex;flex-direction:column}}
 .pc img{{width:100%;height:auto;aspect-ratio:335/230;object-fit:contain;background:#fff;display:block;border-bottom:1px solid #EEF0F7}}
@@ -133,16 +142,19 @@ pb=f"""<style>
 <h1>買取参考価格</h1>
 <p class="meta" style="margin:0 0 6px">全国の買取大吉でのお買取り例 {len(rows)}点（{PRICE_DATE}時点）</p>
 <p style="margin:0 0 20px;font-size:16px">金・ジュエリー・時計・バッグなど、買取大吉の公式サイトに載っている買取参考価格です。同じお品物でも、状態や付属品、その日の相場で金額は変わります。<strong>「うちのはいくら？」は、法隆寺店で無料査定</strong>してください。</p>
+<div class="srch"><input id="q" type="search" placeholder="品名で探す（例：ロレックス、ネックレス、記念硬貨）" aria-label="品名で探す"></div>
 <div class="fbs" role="group" aria-label="カテゴリで絞り込む">{btns}</div>
+<p class="cnt" id="cnt"></p>
 <div class="pg" id="pg">{cards}</div>
+<p class="nohit" id="nohit" hidden>見つかりませんでした。載っていない品物も査定できます。お気軽にお電話ください。</p>
 <p class="meta" style="margin-top:20px">※出典：買取大吉 公式サイト掲載の買取参考価格・写真（{PRICE_DATE}時点）。買取金額を保証するものではありません。<br>※お品物の状態・付属品の有無・その日の相場によって金額は変わります。金・プラチナは毎日の相場で価格が変わります。</p>
 <script>
-document.querySelectorAll('.fb').forEach(b=>b.addEventListener('click',()=>{{document.querySelectorAll('.fb').forEach(x=>x.classList.toggle('on',x===b));const f=b.dataset.f;document.querySelectorAll('.pc').forEach(c=>c.style.display=(f==='all'||c.dataset.cat===f)?'':'none');}}));
+(function(){{var f='all',q=document.getElementById('q'),cnt=document.getElementById('cnt'),nh=document.getElementById('nohit');function run(){{var w=(q.value||'').trim().toLowerCase().replace(/\\s+/g,' ').split(' ').filter(Boolean),n=0;document.querySelectorAll('.pc').forEach(function(c){{var t=c.textContent.toLowerCase(),ok=(f==='all'||c.dataset.cat===f)&&w.every(function(x){{return t.indexOf(x)>-1}});c.style.display=ok?'':'none';if(ok)n++;}});cnt.textContent=n+'点';nh.hidden=n>0;}}document.querySelectorAll('.fb').forEach(function(b){{b.addEventListener('click',function(){{document.querySelectorAll('.fb').forEach(function(x){{x.classList.toggle('on',x===b)}});f=b.dataset.f;run();}})}});q.addEventListener('input',run);run();}})();
 </script>
 {{STORECARD}}"""
 pb=pb.replace('{STORECARD}',STORECARD)
 os.makedirs(f'{ROOT}/price',exist_ok=True)
-open(f'{ROOT}/price/index.html','w',encoding='utf-8').write(page('買取参考価格 100点｜買取大吉 法隆寺店（斑鳩町）','金・ジュエリー・時計・バッグ・切手など、買取大吉の買取参考価格を写真付きで紹介。斑鳩町・法隆寺の買取大吉 法隆寺店では査定無料・予約不要です。',f'{SITE}/price/',pb,ogtype='website'))
+open(f'{ROOT}/price/index.html','w',encoding='utf-8').write(page(f'買取参考価格 {len(rows)}点｜買取大吉 法隆寺店（斑鳩町）','金・ジュエリー・時計・バッグ・切手など、買取大吉の買取参考価格を写真付きで紹介。斑鳩町・法隆寺の買取大吉 法隆寺店では査定無料・予約不要です。',f'{SITE}/price/',pb,ogtype='website'))
 
 # ===== LPの「お買取り実績・店長ブログ」欄（index.html の AUTO:LATEST の間を書き換え）=====
 import re as _re
@@ -239,7 +251,7 @@ for c in CATS:
 <h2>査定で見るところ</h2>
 <div class="pts">{''.join(f'<div><b>{t}</b>{d}</div>' for t,d in c['points'])}</div>
 {f'<h2>法隆寺店のお買取り実績</h2><p class="meta" style="margin:0 0 10px">当店で実際にお買取りした品物です（写真は背景や明るさを調整しています）。</p><div class="rs">{rhtml}</div>' if rs else ''}
-{f'<h2>買取参考価格（全国の買取大吉の例）</h2><p class="meta" style="margin:0 0 10px">買取大吉 公式サイト掲載の参考価格・写真（{PRICE_DATE}時点）。法隆寺店の買取金額を保証するものではありません。状態・付属品・その日の相場で変わります。</p><div class="pg2">{phtml}</div><p style="margin:10px 0 0"><a href="/price/">参考価格をもっと見る（100点）→</a></p>' if prs else ''}
+{f'<h2>買取参考価格（全国の買取大吉の例）</h2><p class="meta" style="margin:0 0 10px">買取大吉 公式サイト掲載の参考価格・写真（{PRICE_DATE}時点）。法隆寺店の買取金額を保証するものではありません。状態・付属品・その日の相場で変わります。</p><div class="pg2">{phtml}</div><p style="margin:10px 0 0"><a href="/price/">参考価格をもっと見る（{len(rows)}点）→</a></p>' if prs else ''}
 <h2>よくあるご質問</h2>
 {''.join(f'<details class="fq"><summary>Q. {q}</summary><p style="margin:10px 0 0">A. {a}</p></details>' for q,a in c['faq'])}
 <details class="fq"><summary>Q. 何を持って行けばいいですか？</summary><p style="margin:10px 0 0">A. お品物と、運転免許証やマイナンバーカードなどの本人確認書類をお持ちください。</p></details>
