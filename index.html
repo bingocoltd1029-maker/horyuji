@@ -695,14 +695,18 @@ footer a{display:inline-flex;align-items:center;min-height:44px;padding:0 2px}
 @media (max-width:600px){.pm-box{width:100vw;max-height:92vh;border-radius:10px 10px 0 0;align-self:flex-end}.pm-cta{grid-template-columns:1fr}.pm-body{padding:4px 16px}}
 </style>
 <script>
-(function(){var pm=document.getElementById('pm'),body=document.getElementById('pm-body'),last=null;
+(function(){var pm=document.getElementById('pm'),host=document.getElementById('pm-body'),last=null,root=host.attachShadow?host.attachShadow({mode:'open'}):host,box=pm.querySelector('.pm-box');
 function close(){pm.hidden=true;document.body.style.overflow='';if(last)last.focus();}
-pm.addEventListener('click',function(e){if(e.target.hasAttribute('data-close'))close();});
+pm.addEventListener('click',function(e){if(e.target.hasAttribute&&e.target.hasAttribute('data-close'))close();});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!pm.hidden)close();});
-document.addEventListener('click',function(e){var a=e.target.closest('a[href^="/blog/"]');if(!a||pm.contains(a))return;var h=a.getAttribute('href');if(!/^\/blog\/[^\/]+\/$/.test(h))return;
-e.preventDefault();last=a;body.innerHTML='<p style="padding:40px 0;text-align:center">読み込み中…</p>';pm.hidden=false;document.body.style.overflow='hidden';
-if(window.mt)mt('article_open',{path:h});
-fetch(h).then(function(r){return r.text()}).then(function(t){var d=new DOMParser().parseFromString(t,'text/html'),ar=d.querySelector('article');body.innerHTML=ar?ar.innerHTML:'';body.scrollTop=0;pm.querySelector('.pm-box').scrollTop=0;}).catch(function(){location.href=h;});});
+function open(h){root.innerHTML='<p style="padding:40px 0;text-align:center;font-family:sans-serif">読み込み中…</p>';pm.hidden=false;document.body.style.overflow='hidden';if(window.mt)mt('popup_open',{path:h});
+fetch(h).then(function(r){return r.text()}).then(function(t){var d=new DOMParser().parseFromString(t,'text/html'),m=d.querySelector('article')||d.querySelector('main');if(!m){location.href=h;return;}
+var css=[].map.call(d.querySelectorAll('head style'),function(x){return x.outerHTML}).join('');
+root.innerHTML=css+'<style>:host{display:block}.wrap,main{max-width:none!important;padding:0!important;margin:0!important}nav.cta,.cta,header.head,.same .same-b,a.btn[href^="tel:"],a.btn[href*="line.me"]{display:none!important}img{max-width:100%;height:auto}</style><div class="wrap">'+m.innerHTML+'</div>';
+[].forEach.call(root.querySelectorAll('script'),function(x){x.remove()});box.scrollTop=0;}).catch(function(){location.href=h;});}
+function hit(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var h=a.getAttribute('href');if(pm.contains(a)||(root.contains&&root.contains(a))){if(h==='/'||/^\/#/.test(h)){e.preventDefault();close();if(h.length>2)location.hash=h.slice(1);return;}}if(!/^\/[a-z0-9-]+\/([a-z0-9-]+\/)?$/.test(h))return;e.preventDefault();last=a;open(h);}
+document.addEventListener('click',function(e){if(pm.contains(e.target))return;hit(e);});
+root.addEventListener&&root.addEventListener('click',hit);
 })();
 </script>
 <script>(function(){var n=new Date(Date.now()+9*36e5),h=n.getUTCHours()+n.getUTCMinutes()/60,o=document.getElementById('hx-open');if(!o)return;if(h>=10&&h<19){o.innerHTML='<i></i>本日のご来店予約 <b>受付中</b>（19時まで）';o.classList.add('on');}else if(h<10){o.innerHTML='<i></i>本日 10時から受付（お電話は10時〜）';}else{o.innerHTML='<i></i>明日のご来店予約は10時から受付';}})();</script>
