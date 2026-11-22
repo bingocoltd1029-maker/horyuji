@@ -8,7 +8,7 @@ GitHub Pages で公開。main に push すると1〜2分で https://horyuji.bng.
 - 住所：奈良県生駒郡斑鳩町興留5-1-35サンメゾン法隆寺
 - 電話：06-7777-6590
 - 営業：10:00〜19:00・年中無休・予約不要・無料駐車場（建物裏）・半個室
-- LINE：https://line.me/ti/p/CZCmVd4SQf
+- LINE：https://line.me/R/ti/p/CZCmVd4SQf
 - Googleマップ：https://maps.app.goo.gl/qmBYRcdpAQeCupgSA
 - Instagram：https://www.instagram.com/daikichi_horyuji
 - 古物商許可番号 第62106R070875号（大阪府公安委員会）／インボイス T2120001281633
