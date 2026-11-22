@@ -354,7 +354,7 @@ footer a{display:inline-flex;align-items:center;min-height:44px;padding:0 2px}
 </script>
 </section>
 
-<div class="mgr-mini"><img src="img/manager.webp" alt="店長 吉原" width="64" height="64" loading="lazy"><div><p class="mm-n">店長　吉原<span>金・ブランド・宝石の1級鑑定士</span></p><p class="mm-q">「査定だけでも、お気軽にお声がけください。」</p><a href="#manager">店長のごあいさつを見る →</a></div></div>
+<div class="mgr-mini"><img src="img/manager.webp" alt="店長 吉原" width="64" height="64" loading="lazy"><div><p class="mm-n">店長　吉原<span>金・ブランド・宝石の1級鑑定士</span></p><p class="mm-q">「査定だけでも、お気軽にお声がけください。」</p></div></div>
 <!-- AUTO:LATEST -->
 <section id="results" style="background: #F5F6FA; padding: 72px 24px">
 <style>
@@ -703,7 +703,7 @@ function open(h){root.innerHTML='<p style="padding:40px 0;text-align:center;font
 fetch(h).then(function(r){return r.text()}).then(function(t){var d=new DOMParser().parseFromString(t,'text/html'),m=d.querySelector('article')||d.querySelector('main');if(!m){location.href=h;return;}
 var css=[].map.call(d.querySelectorAll('head style'),function(x){return x.outerHTML}).join('');
 root.innerHTML=css+'<style>:host{display:block}.wrap,main{max-width:none!important;padding:0!important;margin:0!important}nav.cta,.cta,header.head,.same .same-b,a.btn[href^="tel:"],a.btn[href*="line.me"]{display:none!important}img{max-width:100%;height:auto}</style><div class="wrap">'+m.innerHTML+'</div>';
-[].forEach.call(root.querySelectorAll('script'),function(x){x.remove()});box.scrollTop=0;}).catch(function(){location.href=h;});}
+[].forEach.call(root.querySelectorAll('script'),function(x){var c=x.textContent;x.remove();try{new Function('document',c)(root)}catch(err){}});box.scrollTop=0;}).catch(function(){location.href=h;});}
 function hit(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var h=a.getAttribute('href');if(pm.contains(a)||(root.contains&&root.contains(a))){if(h==='/'||/^\/#/.test(h)){e.preventDefault();close();if(h.length>2)location.hash=h.slice(1);return;}}if(!/^\/[a-z0-9-]+\/([a-z0-9-]+\/)?$/.test(h))return;e.preventDefault();last=a;open(h);}
 document.addEventListener('click',function(e){if(pm.contains(e.target))return;hit(e);});
 root.addEventListener&&root.addEventListener('click',hit);
