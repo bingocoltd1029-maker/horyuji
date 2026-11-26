@@ -27,7 +27,7 @@ dict(slug='brand', more=('バッグを持ってくる前に','バッグは、拭
  points=[('ブランドとモデル','人気のモデルや素材かどうかを確かめます。'),('状態','角すれや汚れは見ますが、使っていた物でも大丈夫です。無理にお手入れせず、そのままお持ちください。'),('付属品','保存袋・箱・ストラップ・カードがあれば、一緒にお持ちください。')],
  faq=[('箱や保存袋がなくても売れますか？','はい、お買取りできます。付属品がそろっているほうが高くなることはありますが、なくても大丈夫です。'),('持ち手が黒ずんだバッグでも大丈夫ですか？','はい、値段がつくことは多いです。強くこすったり洗ったりせず、そのままお持ちください。'),('ブランド名がわからないバッグも見てもらえますか？','はい、拝見します。わからない物も、まずはお持ちください。')],
  results=['kaitori-hermes-birkin-orange','kaitori-hermes-kelly-gray','kaitori-hermes-evelyne-tpm','kaitori-chanel-mini-matelasse','kaitori-chanel-22-purple','kaitori-chanel-gst','kaitori-chanel-mini-tophandle','kaitori-lv-neverfull','kaitori-lv-onthego-escale','kaitori-dior-trotter-bag','kaitori-coach-signature-bag','kaitori-lv-long-wallet'],
- price=['バッグ','財布・小物'], cols=['brand-bag-tips']),
+ price=['バッグ','財布・小物'], cols=['brand-bag-kabi-yogore','brand-bag-tips']),
 dict(slug='watch', pricefirst=['ロレックス','オメガ'], more=('動かない時計は、修理に出す前に','電池切れや故障で止まった時計も、そのままお持ちください。修理代のほうが高くつくことがあります。ロレックスやオメガなどの機械式時計は、動かなくてもモデルで値段がつくことがあります。金やプラチナのケースの時計は、素材としての価値も見ます。保証書・箱・余ったコマ（ベルトの部品）があれば一緒にどうぞ。ご家族の古い時計なら、<a href="/ihin/">遺品整理・生前整理</a>のページも参考にしてください。'), c30=True, name='時計', h1='斑鳩町・法隆寺の腕時計の買取',
  title='斑鳩町・法隆寺の時計買取｜動かない時計・古い時計も無料査定｜買取大吉 法隆寺店',
  desc='奈良県斑鳩町の買取大吉 法隆寺店では、ロレックス・オメガ・カルティエなどの腕時計を無料で査定します。動かない時計、電池切れ、ベルトが切れた時計も、修理に出す前にご相談ください。',
