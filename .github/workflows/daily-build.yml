@@ -1,0 +1,22 @@
+name: daily-build
+# 毎朝6時（日本時間）にブログを作り直す。日付が来た予約記事がここで公開される
+on:
+  schedule:
+    - cron: '0 21 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 _tools/build.py
+      - run: |
+          git config user.name "daily-build"
+          git config user.email "actions@github.com"
+          git add -A
+          git diff --cached --quiet || (git commit -m "毎朝の自動ビルド（予約記事の公開）" && git push)

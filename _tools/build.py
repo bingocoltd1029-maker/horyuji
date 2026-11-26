@@ -1,7 +1,19 @@
 # 使い方: python3 _tools/build.py  （posts.py の記事からブログページ・一覧・sitemapを作り直す）
 import os,sys,json,datetime
 sys.path.insert(0,os.path.dirname(__file__))
-from posts import POSTS
+from posts import POSTS as _P1
+from posts_seo import POSTS as _P2
+ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# 日本時間の今日より先の日付の記事は、その日まで出さない（毎朝GitHub Actionsで作り直す）
+_today=(datetime.datetime.now(datetime.timezone.utc)+datetime.timedelta(hours=9)).date().isoformat()
+POSTS=[]
+for _p in _P1+_P2:
+    _p.setdefault('date','2026-11-18')
+    if _p['date']>_today: continue
+    if os.path.exists(f"{ROOT}/img/blog/{_p['slug']}.webp") and os.path.exists(f"{ROOT}/img/blog/{_p['slug']}.jpg"):
+        _p['img']=f"/img/blog/{_p['slug']}.webp"
+    POSTS.append(_p)
+POSTS.sort(key=lambda q:q['date'],reverse=True)
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GOLD='#C9A54C'; SITE='https://horyuji.bng.co.jp'
 OPEN=dict(slug='opening',date='2026-11-18',cat='お知らせ',img='/img/store-front.webp',title='斑鳩町・法隆寺の買取店「買取大吉 法隆寺店」のご案内')
