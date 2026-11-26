@@ -3,11 +3,12 @@ import os,sys,json,datetime
 sys.path.insert(0,os.path.dirname(__file__))
 from posts import POSTS as _P1
 from posts_seo import POSTS as _P2
+from posts_queue import POSTS as _P3
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # 日本時間の今日より先の日付の記事は、その日まで出さない（毎朝GitHub Actionsで作り直す）
 _today=(datetime.datetime.now(datetime.timezone.utc)+datetime.timedelta(hours=9)).date().isoformat()
 POSTS=[]
-for _p in _P1+_P2:
+for _p in _P1+_P2+_P3:
     _p.setdefault('date','2026-11-18')
     if _p['date']>_today: continue
     if os.path.exists(f"{ROOT}/img/blog/{_p['slug']}.webp") and os.path.exists(f"{ROOT}/img/blog/{_p['slug']}.jpg"):
